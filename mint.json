@@ -1,0 +1,86 @@
+{
+    "name": "Opkit",
+    "logo": {
+        "light": "/assets/logo-light.png",
+        "dark": "/assets/logo-dark.png"
+    },
+    "favicon": "/assets/favicon.png",
+    "colors": {
+        "primary": "#6468B1",
+        "light": "#D7EAFF",
+        "dark": "#222222",
+        "ultraLight": "#EDF6FF",
+        "ultraDark": "#0B0101",
+        "background": {
+            "dark": "#151515"
+        }
+    },
+    "topbarLinks": [
+        {
+            "name": "Contact Us",
+            "url": "mailto:founders@opkit.co"
+        }
+    ],
+    "topbarCtaButton": {
+        "name": "Sign Up",
+        "url": "https://www.opkit.co"
+    },
+    "anchors": [
+        {
+            "name": "API Reference",
+            "icon": "rectangle-terminal",
+            "url": "api-reference"
+        }
+    ],
+    "navigation": [
+        {
+            "group": "Get Started",
+            "pages": [
+                "get-started/introduction",
+                "get-started/integration-modes",
+                "get-started/api",
+                "get-started/webhooks"
+            ]
+        },
+        {
+            "group": "Learn More",
+            "pages": [
+                "learn-more/security-and-compliance",
+                "learn-more/support",
+                "learn-more/about-us"
+            ]
+        },
+        {
+            "group": "Insurance Cards",
+            "pages": [
+                "api-reference/insurance-cards/get-insurance-cards",
+                "api-reference/insurance-cards/get-single-insurance-card"
+            ]
+        },
+        {
+            "group": "Submissions",
+            "pages": [
+                "api-reference/submissions/get-submissions",
+                "api-reference/submissions/get-single-submission"
+            ]
+        },
+        {
+            "group": "Manual Eligibility Checks",
+            "pages": [
+                "api-reference/manual-eligibility-checks/get-manual-eligibility-checks",
+                "api-reference/manual-eligibility-checks/get-single-manual-eligibility-check"
+            ]
+        },
+        {
+            "group": "Automated Eligibility Checks",
+            "pages": [
+                "api-reference/automated-eligibility-checks/get-automated-eligibility-checks",
+                "api-reference/automated-eligibility-checks/get-single-automated-eligibility-check"
+            ]
+        }
+    ],
+    "footerSocials": {
+        "github": "https://github.com/opkit-co/openapi",
+        "linkedin": "https://www.linkedin.com/company/opkit"
+    }
+}
