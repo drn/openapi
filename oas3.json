@@ -368,7 +368,7 @@
                     // Just 'number'
                     "plan_number": {
                         "type": "string",
-                        "description": "The insuranace plan number."
+                        "description": "The insurance plan number."
                     },
                     // Just 'description'
                     "plan_description": {
