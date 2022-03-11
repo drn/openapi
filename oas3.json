@@ -21,11 +21,11 @@
     "tags": [
         {
             "name": "Eligibility Inquiries",
-            "description": "Endpoints for creating and reading eligibility inquiries. An eligibility inquiry is a request for information about a person's health insurance coverage."
+            "description": "Create and read eligibility inquiries. An eligibility inquiry is a request for information about a person's health insurance. The eligibility inquiry response can confirm that a patient has active health insurance or provide details of coverage for various specialties."
         },
         {
             "name": "Payers",
-            "description": "Endpoints for reading the Opkit payer list. The Opkit API allows you to interact with health insurance carriers, also known as \"payers\".  This is the list of supported payers."
+            "description": "Read payers. This endpoint returns the list of insurance carriers, also known as \"payers\", supported by Opkit's API. Opkit supports thousands of payers across the United States."
         },
         {
             "name": "Internal",
@@ -399,7 +399,7 @@
                     "code",
                     "name",
                     "coverage_level",
-                    "service_type_codes",
+                    "service_types",
                     "in_plan_network_indicator",
                     "benefit_amount",
                     "benefit_percentage",
@@ -422,7 +422,7 @@
                         "type": "string",
                         "description": "The benefit coverage level. Ex: Individual, Employee Only, etc."
                     },
-                    "service_type_codes": {
+                    "service_types": {
                         "type": "array",
                         "items": {
                             "$ref": "#/components/schemas/ServiceType"
@@ -469,7 +469,7 @@
             "Provider": {
                 "type": "object",
                 "additionalProperties": false,
-                "description": "A healthcare provider, which is assigned a National Provider Identifier, or NPI. This can be an individual or an organization.",
+                "description": "A healthcare provider organization that has been assigned an NPI.",
                 "required": [
                     "organization_name",
                     "npi"
@@ -481,7 +481,7 @@
                     },
                     "npi": {
                         "type": "string",
-                        "description": "The provider's NPI number."
+                        "description": "The provider organization's National Provider Identifier."
                     }
                 }
             },
@@ -493,7 +493,6 @@
                     "first_name",
                     "last_name",
                     "member_id",
-                    "gender",
                     "date_of_birth"
                 ],
                 "properties": {
@@ -508,10 +507,6 @@
                     "member_id": {
                         "type": "string",
                         "description": "The insured person's member ID, as it appears on their insurance card."
-                    },
-                    "gender": {
-                        "type": "string",
-                        "description": "The insured person's gender, as it appears on their insurance card."
                     },
                     "date_of_birth": {
                         "type": "string",
