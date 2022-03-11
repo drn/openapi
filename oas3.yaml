@@ -243,11 +243,9 @@ components:
       additionalProperties: false
       description: TODO
       required:
-        - status_code
         - status
-        - plan_number
-        - plan_description
-        - policy_number
+        - number
+        - description
         - member_id
         - group_number
         - group_description
@@ -256,15 +254,15 @@ components:
           type: string
           description: Eligibility or Benefit Information Code.
           enum:
-            - "Coverage Unknown"
-            - "Active Coverage"
-            - "Active - Full Risk Capitation"
-            - "Active - Services Capitated"
-            - "Active - Services Capitated to Primary Care Physician"
-            - "Active - Pending Investigation"
-            - "Inactive"
-            - "Inactive - Pending Eligibility Update"
-            - "Inactive - Pending Investigation"
+            - coverage_unknown
+            - active_coverage
+            - active_full_risk_capitation
+            - active_services_capitated
+            - active_services_capitated_to_primary_care_physician
+            - active_pending_investigation
+            - inactive
+            - inactive_pending_eligibility_update
+            - inactive_pending_investigation
         number:
           type: number
           description: The insurance plan number.
@@ -282,8 +280,6 @@ components:
       additionalProperties: false
       description: TODO
       required:
-        - auth_or_certification_indicator
-        - code
         - name
         - coverage_level
         - service_types
@@ -294,56 +290,56 @@ components:
       properties:
         name:
           type: string
-          description: The benefit code
+          description: The benefit name
           enum:
-            - "Active Coverage"
-            - "Active - Full Risk Capitation"
-            - "Active - Services Capitated"
-            - "Active - Services Capitated to Primary Care Physician"
-            - "Active - Pending Investigation"
-            - "Inactive"
-            - "Inactive - Pending Eligibility Update"
-            - "Inactive - Pending Investigation"
-            - "Co-Insurance"
-            - "Co-Payment"
-            - "Deductible"
-            - "Coverage Basis"
-            - "Benefit Description"
-            - "Exclusions"
-            - "Limitations"
-            - "Out of Pocket (Stop Loss)"
-            - "Unlimited"
-            - "Non-Covered"
-            - "Cost Containment"
-            - "Reserve"
-            - "Primary Care Provider"
-            - "Pre-existing Condition"
-            - "Managed Care Coordinator"
-            - "Services Restricted to Following Provider"
-            - "Not Deemed a Medical Necessity"
-            - "Benefit Disclaimer"
-            - "Second Surgical Opinion Required"
-            - "Other or Additional Payor"
-            - "Prior Year(s) History"
-            - "Card(s) Reported Lost/Stolen"
-            - "Contact Following Entity for Eligibility or Benefit Information"
-            - "Cannot Process"
-            - "Other Source of Data"
-            - "Health Care Facility"
-            - "Y Spend Down"
+            - active_coverage
+            - active_full_risk_capitation
+            - active_services_capitated
+            - active_services_capitated_to_primary_care_physician
+            - active_pending_investigation
+            - inactive
+            - inactive_pending_eligibility_update
+            - inactive_pending_investigation
+            - co_insurance
+            - co_payment
+            - deductible
+            - coverage_basis
+            - benefit_description
+            - exclusions
+            - limitations
+            - out_of_pocket_stop_loss
+            - unlimited
+            - non_covered
+            - cost_containment
+            - reserve
+            - primary_care_provider
+            - pre_existing_condition
+            - managed_care_coordinator
+            - services_restricted_to_following_provider
+            - not_deemed_a_medical_necessity
+            - benefit_disclaimer
+            - second_surgical_opinion_required
+            - other_or_additional_payor
+            - prior_year_history
+            - card_reported_lost_stolen
+            - contact_following_entity_for_eligibility_or_benefit_information
+            - cannot_process
+            - other_source_of_data
+            - health_care_facility
+            - spend_down
         coverage_level:
           type: string
           description: 'The benefit coverage level. Ex: Individual, Employee Only, etc.'
           enum:
-            - "Children Only"
-            - "Dependents Only"
-            - "Employee and Children"
-            - "Employee Only"
-            - "Employee and Spouse"
-            - "Family"
-            - "Individual"
-            - "Spouse and Children"
-            - "SPO	Spouse Only"
+            - children_only
+            - dependents_only
+            - employee_and_children
+            - employee_only
+            - employee_and_spouse
+            - family
+            - individual
+            - spouse_and_children
+            - spouse_only
         service_types:
           type: array
           items:
@@ -355,9 +351,9 @@ components:
             requested provider were provided within the health plan network or
             not.
           enum:
-          - "Yes"
-          - "No"
-          - "Not Applicable"
+            - yes
+            - no
+            - not_applicable
         benefit_amount:
           type: string
           description: >-
@@ -374,25 +370,25 @@ components:
             The benefit billing period. This is to be used with the
             benefit_amount.
           enum:
-            - "Hour"
-            - "Day"
-            - "Hours"
-            - "Years"
-            - "Year"
-            - "Year"
-            - "Date"
-            - "Contract"
-            - "Episode"
-            - "Visit"
-            - "Outlier"
-            - "Remaining"
-            - "Exceeded"
-            - "Exceeded"
-            - "Lifetime"
-            - "Remaining"
-            - "Month"
-            - "Week"
-            - "Admission"
+            - hour
+            - day
+            - hours
+            - years
+            - year
+            - year
+            - date
+            - contract
+            - episode
+            - visit
+            - outlier
+            - remaining
+            - exceeded
+            - exceeded
+            - lifetime
+            - remaining
+            - month
+            - week
+            - admission
     EligibilityInquiry:
       type: object
       additionalProperties: false
