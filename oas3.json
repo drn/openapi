@@ -343,8 +343,20 @@
             },
             "Plan": {
                 "type": "object",
+                "additionalProperties": false,
+                "description": "TODO",
+                "required": [
+                    "status_code",
+                    "status",
+                    "plan_number",
+                    "plan_description",
+                    "policy_number",
+                    "member_id",
+                    "group_number",
+                    "group_description"
+                ],
                 "properties": {
-                    "statusCode": {
+                    "status_code": {
                         "type": "string",
                         "description": "Eligibility or Benefit Information Code."
                     },
@@ -352,250 +364,267 @@
                         "type": "string",
                         "description": "Eligibility or Benefit Information Code Description."
                     },
-                    "planNumber": {
+                    "plan_number": {
                         "type": "string",
                         "description": "The insuranace plan number."
                     },
-                    "planDescription": {
+                    "plan_description": {
                         "type": "string",
                         "description": "Description or number that identifies the plan or coverage."
                     },
-                    "policyNumber": {
+                    "policy_number": {
                         "type": "string",
                         "description": "Insurance plan policy number."
                     },
-                    "memberId": {
+                    "member_id": {
                         "type": "string",
                         "description": "Loop: 2100C, 2100D; Segments: REF; Element: REF02; Notes: REF01=1W Member Identification Number"
                     },
-                    "groupNumber": {
+                    "group_number": {
                         "type": "string",
                         "description": "Insurance plan group number."
                     },
-                    "groupDescription": {
+                    "group_description": {
                         "type": "string",
                         "description": "Insurance plan group description."
                     }
-                },
-                "Benefits": {
-                    "type": "object",
-                    "properties": {
-                        "auth_or_certification_indicator": {
-                            "type": "string",
-                            "description": "Indicates whether authorization or certification is required per plan provisions. Value can be: Y/N/U."
-                        },
-                        "code": {
-                            "type": "string",
-                            "description": "The benefit code"
-                        },
-                        "name": {
-                            "type": "string",
-                            "description": "The benefit name"
-                        },
-                        "coverage_level": {
-                            "type": "string",
-                            "description": "The benefit coverage level. Ex: Individual, Employee Only, etc."
-                        },
-                        "service_type_codes": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/components/schemas/ServiceType"
-                            }
-                        },
-                        "in_plan_network_indicator": {
-                            "type": "string",
-                            "description": "A yes/no indicator that specifies whether or not services from the requested provider were provided within the health plan network or not."
-                        },
-                        "benefit_amount": {
-                            "type": "string",
-                            "description": "The total amount the patient is responsible for. Ex: deductible, co-payment"
-                        },
-                        "benefit_percentage": {
-                            "type": "string",
-                            "description": "The percentage amount the patient is responsible for. Ex: co-insurance"
-                        },
-                        "time_qualifier": {
-                            "type": "string",
-                            "description": "The benefit billing period. This is to be used with the benefit_amount."
+                }
+            },
+            "Benefits": {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "TODO",
+                "required": [
+                    "auth_or_certification_indicator",
+                    "code",
+                    "name",
+                    "coverage_level",
+                    "service_type_codes",
+                    "in_plan_network_indicator",
+                    "benefit_amount",
+                    "benefit_percentage",
+                    "time_qualifier"
+                ],
+                "properties": {
+                    "auth_or_certification_indicator": {
+                        "type": "string",
+                        "description": "Indicates whether authorization or certification is required per plan provisions. Value can be: Y/N/U."
+                    },
+                    "code": {
+                        "type": "string",
+                        "description": "The benefit code"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "The benefit name"
+                    },
+                    "coverage_level": {
+                        "type": "string",
+                        "description": "The benefit coverage level. Ex: Individual, Employee Only, etc."
+                    },
+                    "service_type_codes": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ServiceType"
                         }
                     },
-                    "description": "TODO"
-                },
-                "Payer": {
-                    "type": "object",
-                    "additionalProperties": false,
-                    "description": "A health insurance carrier, which may offer more than one policy.",
-                    "required": [
-                        "id",
-                        "name"
-                    ],
-                    "properties": {
-                        "id": {
-                            "type": "string",
-                            "format": "uuid",
-                            "description": "A unique identifier."
-                        },
-                        "name": {
-                            "type": "string",
-                            "description": "The name of the payer."
-                        }
+                    "in_plan_network_indicator": {
+                        "type": "string",
+                        "description": "A yes/no indicator that specifies whether or not services from the requested provider were provided within the health plan network or not."
+                    },
+                    "benefit_amount": {
+                        "type": "string",
+                        "description": "The total amount the patient is responsible for. Ex: deductible, co-payment"
+                    },
+                    "benefit_percentage": {
+                        "type": "string",
+                        "description": "The percentage amount the patient is responsible for. Ex: co-insurance"
+                    },
+                    "time_qualifier": {
+                        "type": "string",
+                        "description": "The benefit billing period. This is to be used with the benefit_amount."
                     }
-                },
-                "Provider": {
-                    "type": "object",
-                    "additionalProperties": false,
-                    "description": "A healthcare provider, which is assigned a National Provider Identifier, or NPI. This can be an individual or an organization.",
-                    "required": [
-                        "organization_name",
-                        "npi"
-                    ],
-                    "properties": {
-                        "organization_name": {
-                            "type": "string",
-                            "description": "The name of this provider organization."
-                        },
-                        "npi": {
-                            "type": "string",
-                            "description": "The provider's NPI number."
-                        }
+                }
+            },
+            "Payer": {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "A health insurance carrier, which may offer more than one policy.",
+                "required": [
+                    "id",
+                    "name"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "description": "A unique identifier."
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "The name of the payer."
                     }
-                },
-                "Subscriber": {
-                    "type": "object",
-                    "additionalProperties": false,
-                    "description": "An individual member of a health insurance policy. An insured person.",
-                    "required": [
-                        "first_name",
-                        "last_name",
-                        "member_id",
-                        "gender",
-                        "date_of_birth"
-                    ],
-                    "properties": {
-                        "first_name": {
-                            "type": "string",
-                            "description": "The insured person's first name, as it appears on their insurance card."
-                        },
-                        "last_name": {
-                            "type": "string",
-                            "description": "The insured person's last name, as it appears on their insurance card."
-                        },
-                        "member_id": {
-                            "type": "string",
-                            "description": "The insured person's member ID, as it appears on their insurance card."
-                        },
-                        "gender": {
-                            "type": "string",
-                            "description": "The insured person's gender, as it appears on their insurance card."
-                        },
-                        "date_of_birth": {
-                            "type": "string",
-                            "format": "date",
-                            "description": "The insured person's date of birth, as it appears on their insurance card."
-                        }
+                }
+            },
+            "Provider": {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "A healthcare provider, which is assigned a National Provider Identifier, or NPI. This can be an individual or an organization.",
+                "required": [
+                    "organization_name",
+                    "npi"
+                ],
+                "properties": {
+                    "organization_name": {
+                        "type": "string",
+                        "description": "The name of this provider organization."
+                    },
+                    "npi": {
+                        "type": "string",
+                        "description": "The provider's NPI number."
                     }
-                },
-                "Encounter": {
-                    "type": "object",
-                    "additionalProperties": false,
-                    "description": "An object representing an encounter or interaction between a patient and provider, during which medical services may be performed.",
-                    "required": [
-                        "date_of_service",
-                        "service_type_codes"
-                    ],
-                    "properties": {
-                        "date_of_service": {
-                            "type": "string",
-                            "format": "date",
-                            "description": "The date of this particular patient encounter."
-                        },
-                        "service_type_codes": {
-                            "type": "array",
-                            "description": "A list of service type codes.",
-                            "items": {
-                                "type": "string",
-                                "description": "A valid service type code from this list: https://x12.org/codes/service-type-codes"
-                            }
-                        }
+                }
+            },
+            "Subscriber": {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "An individual member of a health insurance policy. An insured person.",
+                "required": [
+                    "first_name",
+                    "last_name",
+                    "member_id",
+                    "gender",
+                    "date_of_birth"
+                ],
+                "properties": {
+                    "first_name": {
+                        "type": "string",
+                        "description": "The insured person's first name, as it appears on their insurance card."
+                    },
+                    "last_name": {
+                        "type": "string",
+                        "description": "The insured person's last name, as it appears on their insurance card."
+                    },
+                    "member_id": {
+                        "type": "string",
+                        "description": "The insured person's member ID, as it appears on their insurance card."
+                    },
+                    "gender": {
+                        "type": "string",
+                        "description": "The insured person's gender, as it appears on their insurance card."
+                    },
+                    "date_of_birth": {
+                        "type": "string",
+                        "format": "date",
+                        "description": "The insured person's date of birth, as it appears on their insurance card."
                     }
-                },
-                "EligibilityInquiry": {
-                    "type": "object",
-                    "additionalProperties": false,
-                    "description": "A request for information from a payer about a health insurance policy's coverages, typically in relation to a particular subscriber.",
-                    "required": [
-                        "id"
-                    ],
-                    "properties": {
-                        "id": {
+                }
+            },
+            "Encounter": {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "An object representing an encounter or interaction between a patient and provider, during which medical services may be performed.",
+                "required": [
+                    "date_of_service",
+                    "service_type_codes"
+                ],
+                "properties": {
+                    "date_of_service": {
+                        "type": "string",
+                        "format": "date",
+                        "description": "The date of this particular patient encounter."
+                    },
+                    "service_type_codes": {
+                        "type": "array",
+                        "description": "A list of service type codes.",
+                        "items": {
                             "type": "string",
-                            "format": "uuid",
-                            "description": "A unique identifier."
-                        },
-                        "provider": {
-                            "$ref": "#/components/schemas/Provider"
-                        },
-                        "payer": {
-                            "$ref": "#/components/schemas/Payer"
-                        },
-                        "subscriber": {
-                            "$ref": "#/components/schemas/Subscriber"
-                        },
-                        "plan": {
-                            "$ref": "#/components/schemas/Plan"
-                        },
-                        "benefits": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/components/schemas/Benefits"
-                            }
-                        }
-                    }
-                },
-                "Error": {
-                    "type": "object",
-                    "additionalProperties": false,
-                    "description": "An object that is returned when an error has occured.",
-                    "required": [
-                        "code",
-                        "message"
-                    ],
-                    "properties": {
-                        "code": {
-                            "type": "string",
-                            "description": "A unique error code indicating what went wrong."
-                        },
-                        "message": {
-                            "type": "string",
-                            "description": "A brief text description that expands upon this particular error code."
+                            "description": "A valid service type code from this list: https://x12.org/codes/service-type-codes"
                         }
                     }
                 }
             },
-            "responses": {
-                "Default": {
-                    "description": "A default error response if no other response is provided.",
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Error"
-                            }
+            "EligibilityInquiry": {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "A request for information from a payer about a health insurance policy's coverages, typically in relation to a particular subscriber.",
+                "required": [
+                    "id",
+                    "provider",
+                    "payer",
+                    "subscriber",
+                    "plan",
+                    "benefits"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "description": "A unique identifier."
+                    },
+                    "provider": {
+                        "$ref": "#/components/schemas/Provider"
+                    },
+                    "payer": {
+                        "$ref": "#/components/schemas/Payer"
+                    },
+                    "subscriber": {
+                        "$ref": "#/components/schemas/Subscriber"
+                    },
+                    "plan": {
+                        "$ref": "#/components/schemas/Plan"
+                    },
+                    "benefits": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Benefits"
                         }
                     }
                 }
             },
-            "securitySchemes": {
-                "BasicAuth": {
-                    "type": "http",
-                    "scheme": "basic",
-                    "description": "Basic HTTP authentication. To authenticate, please include this request header: \"Authorization: Basic `<your-base64-encoded-API-key>`\". If you are using a client that asks for a username and password (e.g. curl), provide your API key as the username and omit the password."
+            "Error": {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "An object that is returned when an error has occured.",
+                "required": [
+                    "code",
+                    "message"
+                ],
+                "properties": {
+                    "code": {
+                        "type": "string",
+                        "description": "A unique error code indicating what went wrong."
+                    },
+                    "message": {
+                        "type": "string",
+                        "description": "A brief text description that expands upon this particular error code."
+                    }
                 }
             }
         },
-        "security": [
-            {
-                "BasicAuth": []
+        "responses": {
+            "Default": {
+                "description": "A default error response if no other response is provided.",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/Error"
+                        }
+                    }
+                }
             }
-        ]
-    }
+        },
+        "securitySchemes": {
+            "BasicAuth": {
+                "type": "http",
+                "scheme": "basic",
+                "description": "Basic HTTP authentication. To authenticate, please include this request header: \"Authorization: Basic `<your-base64-encoded-API-key>`\". If you are using a client that asks for a username and password (e.g. curl), provide your API key as the username and omit the password."
+            }
+        }
+    },
+    "security": [
+        {
+            "BasicAuth": []
+        }
+    ]
 }
