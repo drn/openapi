@@ -340,8 +340,120 @@
                         "type": "string",
                         "format": "uuid",
                         "description": "A unique identifier."
+                    },
+                    "provider": {
+                        "$ref": "#/components/schemas/Provider"
+                    },
+                    "payer": {
+                        "$ref": "#/components/schemas/Payer"
+                    },
+                    "subscriber": {
+                        "$ref": "#/components/schemas/Subscriber"
+                    },
+                    "plan": {
+                        "$ref": "#/components/schemas/Plan"
+                    },
+                    "benefits": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Benefits"
+                        }
                     }
                 }
+            },
+            "ServiceType": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "string",
+                        "description": "TODO"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "TODO"
+                    }
+                }
+            },
+            "Plan": {
+                "type": "object",
+                "properties": {
+                    "statusCode": {
+                        "type": "string",
+                        "description": "Eligibility or Benefit Information Code."
+                    },
+                    "status": {
+                        "type": "string",
+                        "description": "Eligibility or Benefit Information Code Description."
+                    },
+                    "planNumber": {
+                        "type": "string",
+                        "description": "The insuranace plan number."
+                    },
+                    "planDescription": {
+                        "type": "string",
+                        "description": "Description or number that identifies the plan or coverage."
+                    },
+                    "policyNumber": {
+                        "type": "string",
+                        "description": "Insurance plan policy number."
+                    },
+                    "memberId": {
+                        "type": "string",
+                        "description": "Loop: 2100C, 2100D; Segments: REF; Element: REF02; Notes: REF01=1W Member Identification Number"
+                    },
+                    "groupNumber": {
+                        "type": "string",
+                        "description": "Insurance plan group number."
+                    },
+                    "groupDescription": {
+                        "type": "string",
+                        "description": "Insurance plan group description."
+                    }
+                }
+            },
+            "Benefits": {
+                "type": "object",
+                "properties": {
+                    "auth_or_certification_indicator": {
+                        "type": "string",
+                        "description": "Indicates whether authorization or certification is required per plan provisions. Value can be: Y/N/U."
+                    },
+                    "code": {
+                        "type": "string",
+                        "description": "The benefit code"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "The benefit name"
+                    },
+                    "coverage_level": {
+                        "type": "string",
+                        "description": "The benefit coverage level. Ex: Individual, Employee Only, etc."
+                    },
+                    "service_type_codes": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ServiceType"
+                        }
+                    },
+                    "in_plan_network_indicator": {
+                        "type": "string",
+                        "description": "A yes/no indicator that specifies whether or not services from the requested provider were provided within the health plan network or not."
+                    },
+                    "benefit_amount": {
+                        "type": "string",
+                        "description": "The total amount the patient is responsible for. Ex: deductible, co-payment"
+                    },
+                    "benefit_percentage": {
+                        "type": "string",
+                        "description": "The percentage amount the patient is responsible for. Ex: co-insurance"
+                    },
+                    "time_qualifier": {
+                        "type": "string",
+                        "description": "The benefit billing period. This is to be used with the benefit_amount."
+                    }
+                },
+                "description": "TODO"
             },
             "Payer": {
                 "type": "object",
