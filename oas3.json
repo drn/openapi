@@ -1,601 +1,695 @@
 {
-    "openapi": "3.0.1",
-    "info": {
-        "title": "Opkit",
-        "version": "v1",
-        "description": "The modern API for health insurance.",
-        "contact": {
-            "name": "Opkit",
-            "url": "https://opkit.co"
-        },
-        "license": {
-            "name": "Terms of Use",
-            "url": "https://opkit.co/terms"
-        }
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Opkit",
+    "version": "v1",
+    "description": "The modern API for health insurance.",
+    "contact": {
+      "name": "Opkit",
+      "url": "https://opkit.co"
     },
-    "servers": [
-        {
-            "url": "https://api.opkit.co"
-        }
-    ],
-    "tags": [
-        {
-            "name": "Eligibility Inquiries",
-            "description": "Endpoints for creating and reading eligibility inquiries. An eligibility inquiry is a request for information about a person's health insurance coverage."
-        },
-        {
-            "name": "Payers",
-            "description": "Endpoints for reading the Opkit payer list. The Opkit API allows you to interact with health insurance carriers, also known as \"payers\".  This is the list of supported payers."
-        },
-        {
-            "name": "Internal",
-            "description": "For Opkit internal use. These endpoints will not work for customer API keys. Please do not attempt to access them."
-        }
-    ],
-    "paths": {
-        "/v1/eligibility_inquiries": {
-            "post": {
-                "summary": "Create a new eligibility inquiry",
-                "description": "Create a new eligibility inquiry for the given plan, provider and subscriber. The response should indicate whether the subscriber is eligible for any services offered by provider under this plan.",
-                "operationId": "postEligibilityInquiries",
-                "requestBody": {
-                    "description": "A payload containing the payer_id, provider, subscriber and encounter information that is relevant for this eligibility inquiry.",
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "description": "An object containing a payer_id, provider, subscriber and an encounter.",
-                                "additionalProperties": false,
-                                "required": [
-                                    "payer_id",
-                                    "provider",
-                                    "subscriber",
-                                    "encounter"
-                                ],
-                                "properties": {
-                                    "payer_id": {
-                                        "type": "string",
-                                        "format": "uuid",
-                                        "description": "The ID of the insurance plan that should receive the inquiry."
-                                    },
-                                    "provider": {
-                                        "$ref": "#/components/schemas/Provider"
-                                    },
-                                    "subscriber": {
-                                        "$ref": "#/components/schemas/Subscriber"
-                                    },
-                                    "encounter": {
-                                        "$ref": "#/components/schemas/Encounter"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/EligibilityInquiry"
-                                }
-                            }
-                        }
-                    },
-                    "default": {
-                        "$ref": "#/components/responses/Default"
-                    }
-                },
-                "tags": [
-                    "Eligibility Inquiries"
-                ]
-            },
-            "get": {
-                "summary": "Get all existing eligibility inquiries",
-                "description": "Get a complete list of the eligibility inquiries that you have created in the past.",
-                "operationId": "getEligibilityInquiries",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "description": "An object containing a list of eligibility inquiries and a count of those eligibility inquiries.",
-                                    "additionalProperties": false,
-                                    "required": [
-                                        "count",
-                                        "items"
-                                    ],
-                                    "properties": {
-                                        "count": {
-                                            "type": "number",
-                                            "description": "The number of items in this list."
-                                        },
-                                        "items": {
-                                            "type": "array",
-                                            "description": "A list of eligibility inquiries.",
-                                            "items": {
-                                                "$ref": "#/components/schemas/EligibilityInquiry"
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "default": {
-                        "$ref": "#/components/responses/Default"
-                    }
-                },
-                "tags": [
-                    "Eligibility Inquiries"
-                ]
-            }
-        },
-        "/v1/eligibility_inquiries/{id}": {
-            "get": {
-                "summary": "Get a single eligibility inquiry",
-                "description": "Get a single eligibility inquiry that you have created in the past.",
-                "operationId": "getEligibilityInquiriesId",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "id",
-                        "schema": {
-                            "type": "string",
-                            "format": "uuid",
-                            "description": "An eligibility inquiry ID."
-                        },
-                        "required": true,
-                        "description": "ID of the eligibility inquiry to get."
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/EligibilityInquiry"
-                                }
-                            }
-                        }
-                    },
-                    "default": {
-                        "$ref": "#/components/responses/Default"
-                    }
-                },
-                "tags": [
-                    "Eligibility Inquiries"
-                ]
-            }
-        },
-        "/v1/payers": {
-            "get": {
-                "summary": "Get all payers",
-                "description": "Get a complete list of the payers supported by Opkit.",
-                "operationId": "getPayers",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "description": "An object containing a list of payers and a count of those payers.",
-                                    "additionalProperties": false,
-                                    "required": [
-                                        "count",
-                                        "items"
-                                    ],
-                                    "properties": {
-                                        "count": {
-                                            "type": "number",
-                                            "description": "The number of items in this list."
-                                        },
-                                        "items": {
-                                            "type": "array",
-                                            "description": "A list of payers.",
-                                            "items": {
-                                                "$ref": "#/components/schemas/Payer"
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "default": {
-                        "$ref": "#/components/responses/Default"
-                    }
-                },
-                "tags": [
-                    "Payers"
-                ]
-            }
-        },
-        "/v1/register": {
-            "post": {
-                "summary": "Create a new customer user, customer organizaton, and API key",
-                "description": "Create a new customer user, customer organizaton, and API key in a single request. This endpoint is for Opkit internal use only. It will not work for customer API keys.",
-                "operationId": "postRegister",
-                "requestBody": {
-                    "description": "A payload containing the full name to use for the new customer user, the email address to use for the new customer user, and the name to use for the new customer_organization.",
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "description": "An object containing the full name to use for the new customer user, the email address to use for the new customer user, and the name to use for the new customer_organization.",
-                                "additionalProperties": false,
-                                "required": [
-                                    "customer_user_name",
-                                    "customer_user_email",
-                                    "customer_organization_name"
-                                ],
-                                "properties": {
-                                    "customer_user_name": {
-                                        "type": "string",
-                                        "description": "The full name to use for the new customer user."
-                                    },
-                                    "customer_user_email": {
-                                        "type": "string",
-                                        "format": "email",
-                                        "description": "The email address to use for the new customer user."
-                                    },
-                                    "customer_organization_name": {
-                                        "type": "string",
-                                        "description": "The name to use for the new customer organization."
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "description": "An object containing various fields from the new customer user, customer organization, and API key. This object will contain the secret value of the API key, which should never be shared publicly!",
-                                    "additionalProperties": false,
-                                    "required": [
-                                        "customer_user_id",
-                                        "customer_user_name",
-                                        "customer_user_email",
-                                        "customer_organization_id",
-                                        "customer_organization_name",
-                                        "api_key_id",
-                                        "api_key_name",
-                                        "api_key_value"
-                                    ],
-                                    "properties": {
-                                        "customer_user_id": {
-                                            "type": "string",
-                                            "format": "uuid",
-                                            "description": "The ID of the new customer user."
-                                        },
-                                        "customer_user_name": {
-                                            "type": "string",
-                                            "description": "The name of the new customer user."
-                                        },
-                                        "customer_user_email": {
-                                            "type": "string",
-                                            "description": "The email of the new customer user."
-                                        },
-                                        "customer_organization_id": {
-                                            "type": "string",
-                                            "format": "uuid",
-                                            "description": "The ID of the new customer organization."
-                                        },
-                                        "customer_organization_name": {
-                                            "type": "string",
-                                            "format": "uuid",
-                                            "description": "The name of the new customer organization."
-                                        },
-                                        "api_key_id": {
-                                            "type": "string",
-                                            "format": "uuid",
-                                            "description": "The ID of the new API key."
-                                        },
-                                        "api_key_name": {
-                                            "type": "string",
-                                            "format": "uuid",
-                                            "description": "The name of the new API key."
-                                        },
-                                        "api_key_value": {
-                                            "type": "string",
-                                            "format": "uuid",
-                                            "description": "The value of the new API key. This value is secret and should never be shared publicly!"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "default": {
-                        "$ref": "#/components/responses/Default"
-                    }
-                },
-                "tags": [
-                    "Internal"
-                ]
-            }
-        }
+    "license": {
+      "name": "Terms of Use",
+      "url": "https://opkit.co/terms"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.opkit.co"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Eligibility Inquiries",
+      "description": "Create and read eligibility inquiries. An eligibility inquiry is a request for information about a person's health insurance. The eligibility inquiry response can confirm that a patient has active health insurance or provide details of coverage for various specialties."
     },
-    "components": {
-        "schemas": {
-            "EligibilityInquiry": {
+    {
+      "name": "Payers",
+      "description": "Read payers. This endpoint returns the list of insurance carriers, also known as \"payers\", supported by Opkit's API. Opkit supports thousands of payers across the United States."
+    },
+    {
+      "name": "Internal",
+      "description": "For Opkit internal use. These endpoints will not work for customer API keys. Please do not attempt to access them."
+    }
+  ],
+  "paths": {
+    "/v1/eligibility_inquiries": {
+      "post": {
+        "summary": "Create a new eligibility inquiry",
+        "description": "Create a new eligibility inquiry for the given plan, provider and subscriber. The response should indicate whether the subscriber is eligible for any services offered by provider under this plan.",
+        "operationId": "postEligibilityInquiries",
+        "requestBody": {
+          "description": "A payload containing the payer_id, provider, subscriber and encounter information that is relevant for this eligibility inquiry.",
+          "content": {
+            "application/json": {
+              "schema": {
                 "type": "object",
+                "description": "An object containing a payer_id, provider, subscriber and an encounter.",
                 "additionalProperties": false,
-                "description": "A request for information from a payer about a health insurance policy's coverages, typically in relation to a particular subscriber.",
-                "required": [
-                    "id"
-                ],
+                "required": ["payer_id", "provider", "subscriber", "encounter"],
                 "properties": {
-                    "id": {
-                        "type": "string",
-                        "format": "uuid",
-                        "description": "A unique identifier."
-                    },
-                    "provider": {
-                        "$ref": "#/components/schemas/Provider"
-                    },
-                    "payer": {
-                        "$ref": "#/components/schemas/Payer"
-                    },
-                    "subscriber": {
-                        "$ref": "#/components/schemas/Subscriber"
-                    },
-                    "plan": {
-                        "$ref": "#/components/schemas/Plan"
-                    },
-                    "benefits": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/Benefits"
-                        }
-                    }
+                  "payer_id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "The ID of the insurance plan that should receive the inquiry."
+                  },
+                  "provider": {
+                    "$ref": "#/components/schemas/Provider"
+                  },
+                  "subscriber": {
+                    "$ref": "#/components/schemas/Subscriber"
+                  },
+                  "encounter": {
+                    "$ref": "#/components/schemas/Encounter"
+                  }
                 }
-            },
-            "ServiceType": {
-                "type": "object",
-                "properties": {
-                    "code": {
-                        "type": "string",
-                        "description": "TODO"
-                    },
-                    "name": {
-                        "type": "string",
-                        "description": "TODO"
-                    }
-                }
-            },
-            "Plan": {
-                "type": "object",
-                "properties": {
-                    "statusCode": {
-                        "type": "string",
-                        "description": "Eligibility or Benefit Information Code."
-                    },
-                    "status": {
-                        "type": "string",
-                        "description": "Eligibility or Benefit Information Code Description."
-                    },
-                    "planNumber": {
-                        "type": "string",
-                        "description": "The insuranace plan number."
-                    },
-                    "planDescription": {
-                        "type": "string",
-                        "description": "Description or number that identifies the plan or coverage."
-                    },
-                    "policyNumber": {
-                        "type": "string",
-                        "description": "Insurance plan policy number."
-                    },
-                    "memberId": {
-                        "type": "string",
-                        "description": "Loop: 2100C, 2100D; Segments: REF; Element: REF02; Notes: REF01=1W Member Identification Number"
-                    },
-                    "groupNumber": {
-                        "type": "string",
-                        "description": "Insurance plan group number."
-                    },
-                    "groupDescription": {
-                        "type": "string",
-                        "description": "Insurance plan group description."
-                    }
-                }
-            },
-            "Benefits": {
-                "type": "object",
-                "properties": {
-                    "auth_or_certification_indicator": {
-                        "type": "string",
-                        "description": "Indicates whether authorization or certification is required per plan provisions. Value can be: Y/N/U."
-                    },
-                    "code": {
-                        "type": "string",
-                        "description": "The benefit code"
-                    },
-                    "name": {
-                        "type": "string",
-                        "description": "The benefit name"
-                    },
-                    "coverage_level": {
-                        "type": "string",
-                        "description": "The benefit coverage level. Ex: Individual, Employee Only, etc."
-                    },
-                    "service_type_codes": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/ServiceType"
-                        }
-                    },
-                    "in_plan_network_indicator": {
-                        "type": "string",
-                        "description": "A yes/no indicator that specifies whether or not services from the requested provider were provided within the health plan network or not."
-                    },
-                    "benefit_amount": {
-                        "type": "string",
-                        "description": "The total amount the patient is responsible for. Ex: deductible, co-payment"
-                    },
-                    "benefit_percentage": {
-                        "type": "string",
-                        "description": "The percentage amount the patient is responsible for. Ex: co-insurance"
-                    },
-                    "time_qualifier": {
-                        "type": "string",
-                        "description": "The benefit billing period. This is to be used with the benefit_amount."
-                    }
-                },
-                "description": "TODO"
-            },
-            "Payer": {
-                "type": "object",
-                "additionalProperties": false,
-                "description": "A health insurance carrier, which may offer more than one policy.",
-                "required": [
-                    "id",
-                    "name"
-                ],
-                "properties": {
-                    "id": {
-                        "type": "string",
-                        "format": "uuid",
-                        "description": "A unique identifier."
-                    },
-                    "name": {
-                        "type": "string",
-                        "description": "The name of the payer."
-                    }
-                }
-            },
-            "Provider": {
-                "type": "object",
-                "additionalProperties": false,
-                "description": "A healthcare provider, which is assigned a National Provider Identifier, or NPI. This can be an individual or an organization.",
-                "required": [
-                    "organization_name",
-                    "npi"
-                ],
-                "properties": {
-                    "organization_name": {
-                        "type": "string",
-                        "description": "The name of this provider organization."
-                    },
-                    "npi": {
-                        "type": "string",
-                        "description": "The provider's NPI number."
-                    }
-                }
-            },
-            "Subscriber": {
-                "type": "object",
-                "additionalProperties": false,
-                "description": "An individual member of a health insurance policy. An insured person.",
-                "required": [
-                    "first_name",
-                    "last_name",
-                    "member_id",
-                    "gender",
-                    "date_of_birth"
-                ],
-                "properties": {
-                    "first_name": {
-                        "type": "string",
-                        "description": "The insured person's first name, as it appears on their insurance card."
-                    },
-                    "last_name": {
-                        "type": "string",
-                        "description": "The insured person's last name, as it appears on their insurance card."
-                    },
-                    "member_id": {
-                        "type": "string",
-                        "description": "The insured person's member ID, as it appears on their insurance card."
-                    },
-                    "gender": {
-                        "type": "string",
-                        "description": "The insured person's gender, as it appears on their insurance card."
-                    },
-                    "date_of_birth": {
-                        "type": "string",
-                        "format": "date",
-                        "description": "The insured person's date of birth, as it appears on their insurance card."
-                    }
-                }
-            },
-            "Encounter": {
-                "type": "object",
-                "additionalProperties": false,
-                "description": "An object representing an encounter or interaction between a patient and provider, during which medical services may be performed.",
-                "required": [
-                    "date_of_service",
-                    "service_type_codes"
-                ],
-                "properties": {
-                    "date_of_service": {
-                        "type": "string",
-                        "format": "date",
-                        "description": "The date of this particular patient encounter."
-                    },
-                    "service_type_codes": {
-                        "type": "array",
-                        "description": "A list of service type codes.",
-                        "items": {
-                            "type": "string",
-                            "description": "A valid service type code from this list: https://x12.org/codes/service-type-codes"
-                        }
-                    }
-                }
-            },
-            "Error": {
-                "type": "object",
-                "additionalProperties": false,
-                "description": "An object that is returned when an error has occured.",
-                "required": [
-                    "code",
-                    "message"
-                ],
-                "properties": {
-                    "code": {
-                        "type": "string",
-                        "description": "A unique error code indicating what went wrong."
-                    },
-                    "message": {
-                        "type": "string",
-                        "description": "A brief text description that expands upon this particular error code."
-                    }
-                }
+              }
             }
+          }
         },
         "responses": {
-            "Default": {
-                "description": "A default error response if no other response is provided.",
-                "content": {
-                    "application/json": {
-                        "schema": {
-                            "$ref": "#/components/schemas/Error"
-                        }
-                    }
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EligibilityInquiry"
                 }
+              }
             }
+          },
+          "default": {
+            "$ref": "#/components/responses/Default"
+          }
         },
-        "securitySchemes": {
-            "BasicAuth": {
-                "type": "http",
-                "scheme": "basic",
-                "description": "Basic HTTP authentication. To authenticate, please include this request header: \"Authorization: Basic `<your-base64-encoded-API-key>`\". If you are using a client that asks for a username and password (e.g. curl), provide your API key as the username and omit the password."
+        "tags": ["Eligibility Inquiries"]
+      },
+      "get": {
+        "summary": "Get all existing eligibility inquiries",
+        "description": "Get a complete list of the eligibility inquiries that you have created in the past.",
+        "operationId": "getEligibilityInquiries",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An object containing a list of eligibility inquiries and a count of those eligibility inquiries.",
+                  "additionalProperties": false,
+                  "required": ["count", "items"],
+                  "properties": {
+                    "count": {
+                      "type": "number",
+                      "description": "The number of items in this list."
+                    },
+                    "items": {
+                      "type": "array",
+                      "description": "A list of eligibility inquiries.",
+                      "items": {
+                        "$ref": "#/components/schemas/EligibilityInquiry"
+                      }
+                    }
+                  }
+                }
+              }
             }
-        }
+          },
+          "default": {
+            "$ref": "#/components/responses/Default"
+          }
+        },
+        "tags": ["Eligibility Inquiries"]
+      }
     },
-    "security": [
-        {
-            "BasicAuth": []
+    "/v1/eligibility_inquiries/{id}": {
+      "get": {
+        "summary": "Get a single eligibility inquiry",
+        "description": "Get a single eligibility inquiry that you have created in the past.",
+        "operationId": "getEligibilityInquiriesId",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "description": "An eligibility inquiry ID."
+            },
+            "required": true,
+            "description": "ID of the eligibility inquiry to get."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EligibilityInquiry"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Default"
+          }
+        },
+        "tags": ["Eligibility Inquiries"]
+      }
+    },
+    "/v1/payers": {
+      "get": {
+        "summary": "Get all payers",
+        "description": "Get a complete list of the payers supported by Opkit.",
+        "operationId": "getPayers",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An object containing a list of payers and a count of those payers.",
+                  "additionalProperties": false,
+                  "required": ["count", "items"],
+                  "properties": {
+                    "count": {
+                      "type": "number",
+                      "description": "The number of items in this list."
+                    },
+                    "items": {
+                      "type": "array",
+                      "description": "A list of payers.",
+                      "items": {
+                        "$ref": "#/components/schemas/Payer"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Default"
+          }
+        },
+        "tags": ["Payers"]
+      }
+    },
+    "/v1/register": {
+      "post": {
+        "summary": "Create a new customer user, customer organizaton, and API key",
+        "description": "Create a new customer user, customer organizaton, and API key in a single request. This endpoint is for Opkit internal use only. It will not work for customer API keys.",
+        "operationId": "postRegister",
+        "requestBody": {
+          "description": "A payload containing the full name to use for the new customer user, the email address to use for the new customer user, and the name to use for the new customer_organization.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "description": "An object containing the full name to use for the new customer user, the email address to use for the new customer user, and the name to use for the new customer_organization.",
+                "additionalProperties": false,
+                "required": [
+                  "customer_user_name",
+                  "customer_user_email",
+                  "customer_organization_name"
+                ],
+                "properties": {
+                  "customer_user_name": {
+                    "type": "string",
+                    "description": "The full name to use for the new customer user."
+                  },
+                  "customer_user_email": {
+                    "type": "string",
+                    "format": "email",
+                    "description": "The email address to use for the new customer user."
+                  },
+                  "customer_organization_name": {
+                    "type": "string",
+                    "description": "The name to use for the new customer organization."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An object containing various fields from the new customer user, customer organization, and API key. This object will contain the secret value of the API key, which should never be shared publicly!",
+                  "additionalProperties": false,
+                  "required": [
+                    "customer_user_id",
+                    "customer_user_name",
+                    "customer_user_email",
+                    "customer_organization_id",
+                    "customer_organization_name",
+                    "api_key_id",
+                    "api_key_name",
+                    "api_key_value"
+                  ],
+                  "properties": {
+                    "customer_user_id": {
+                      "type": "string",
+                      "format": "uuid",
+                      "description": "The ID of the new customer user."
+                    },
+                    "customer_user_name": {
+                      "type": "string",
+                      "description": "The name of the new customer user."
+                    },
+                    "customer_user_email": {
+                      "type": "string",
+                      "description": "The email of the new customer user."
+                    },
+                    "customer_organization_id": {
+                      "type": "string",
+                      "format": "uuid",
+                      "description": "The ID of the new customer organization."
+                    },
+                    "customer_organization_name": {
+                      "type": "string",
+                      "format": "uuid",
+                      "description": "The name of the new customer organization."
+                    },
+                    "api_key_id": {
+                      "type": "string",
+                      "format": "uuid",
+                      "description": "The ID of the new API key."
+                    },
+                    "api_key_name": {
+                      "type": "string",
+                      "format": "uuid",
+                      "description": "The name of the new API key."
+                    },
+                    "api_key_value": {
+                      "type": "string",
+                      "format": "uuid",
+                      "description": "The value of the new API key. This value is secret and should never be shared publicly!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Default"
+          }
+        },
+        "tags": ["Internal"]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ServiceType": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "TODO"
+          },
+          "name": {
+            "type": "string",
+            "description": "TODO"
+          }
         }
-    ]
+      },
+      "Plan": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "TODO",
+        "required": [
+          "status_code",
+          "status",
+          "plan_number",
+          "plan_description",
+          "policy_number",
+          "member_id",
+          "group_number",
+          "group_description"
+        ],
+        "properties": {
+          // Can we collapse status and status_code into a single human-readable 'status' enum?
+          "status_code": {
+            "type": "string",
+            "description": "Eligibility or Benefit Information Code."
+          },
+          "status": {
+            "type": "string",
+            "description": "Eligibility or Benefit Information Code Description."
+          },
+          // Just 'number'
+          "plan_number": {
+            "type": "string",
+            "description": "The insurance plan number."
+          },
+          // Just 'description'
+          "plan_description": {
+            "type": "string",
+            "description": "Description or number that identifies the plan or coverage."
+          },
+          // I don't know if this is necessary... It was not included on the Sherwood eligibility response.
+          "policy_number": {
+            "type": "string",
+            "description": "Insurance plan policy number."
+          },
+          // This already exists on the subscriber object
+          "member_id": {
+            "type": "string",
+            "description": "Loop: 2100C, 2100D; Segments: REF; Element: REF02; Notes: REF01=1W Member Identification Number"
+          },
+          "group_number": {
+            "type": "string",
+            "description": "Insurance plan group number."
+          },
+          "group_description": {
+            "type": "string",
+            "description": "Insurance plan group description."
+          }
+        }
+      },
+      "Benefits": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "TODO",
+        "required": [
+          "auth_or_certification_indicator",
+          "code",
+          "name",
+          "coverage_level",
+          "service_types",
+          "in_plan_network_indicator",
+          "benefit_amount",
+          "benefit_percentage",
+          "time_qualifier"
+        ],
+        "properties": {
+          // I'm not sure what this is. It doesn't appear very often in the Sherwood eligibility response -
+          // only on hospital services. It's probably not necessary for v1, but if we wanted to include it,
+          // it should be a human-readable enum.
+          "auth_or_certification_indicator": {
+            "type": "string",
+            "description": "Indicates whether authorization or certification is required per plan provisions. Value can be: Y/N/U."
+          },
+          // I'm not sure what this is, but it appears on every benefit, so we should probably keep it.
+          // This should be a human-readable enum
+          "code": {
+            "type": "string",
+            "description": "The benefit code"
+          },
+          "name": {
+            "type": "string",
+            "description": "The benefit name"
+          },
+          // This should be a human-readable enum
+          "coverage_level": {
+            "type": "string",
+            "description": "The benefit coverage level. Ex: Individual, Employee Only, etc."
+          },
+          "service_types": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ServiceType"
+            }
+          },
+          "in_plan_network_indicator": {
+            "type": "string",
+            "description": "A yes/no indicator that specifies whether or not services from the requested provider were provided within the health plan network or not."
+          },
+          // Needs format
+          "benefit_amount": {
+            "type": "string",
+            "description": "The total amount the patient is responsible for. Ex: deductible, co-payment"
+          },
+          // Needs format
+          "benefit_percentage": {
+            "type": "string",
+            "description": "The percentage amount the patient is responsible for. Ex: co-insurance"
+          },
+          // Needs format
+          "time_qualifier": {
+            "type": "string",
+            "description": "The benefit billing period. This is to be used with the benefit_amount."
+          }
+        }
+      },
+      "ServiceType": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "TODO"
+          },
+          "name": {
+            "type": "string",
+            "description": "TODO"
+          }
+        }
+      },
+      "Plan": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "type": "string",
+            "description": "Eligibility or Benefit Information Code."
+          },
+          "status": {
+            "type": "string",
+            "description": "Eligibility or Benefit Information Code Description."
+          },
+          "planNumber": {
+            "type": "string",
+            "description": "The insuranace plan number."
+          },
+          "planDescription": {
+            "type": "string",
+            "description": "Description or number that identifies the plan or coverage."
+          },
+          "policyNumber": {
+            "type": "string",
+            "description": "Insurance plan policy number."
+          },
+          "memberId": {
+            "type": "string",
+            "description": "Loop: 2100C, 2100D; Segments: REF; Element: REF02; Notes: REF01=1W Member Identification Number"
+          },
+          "groupNumber": {
+            "type": "string",
+            "description": "Insurance plan group number."
+          },
+          "groupDescription": {
+            "type": "string",
+            "description": "Insurance plan group description."
+          }
+        }
+      },
+      "Benefits": {
+        "type": "object",
+        "properties": {
+          "auth_or_certification_indicator": {
+            "type": "string",
+            "description": "Indicates whether authorization or certification is required per plan provisions. Value can be: Y/N/U."
+          },
+          "code": {
+            "type": "string",
+            "description": "The benefit code"
+          },
+          "name": {
+            "type": "string",
+            "description": "The benefit name"
+          },
+          "coverage_level": {
+            "type": "string",
+            "description": "The benefit coverage level. Ex: Individual, Employee Only, etc."
+          },
+          "service_type_codes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ServiceType"
+            }
+          },
+          "in_plan_network_indicator": {
+            "type": "string",
+            "description": "A yes/no indicator that specifies whether or not services from the requested provider were provided within the health plan network or not."
+          },
+          "benefit_amount": {
+            "type": "string",
+            "description": "The total amount the patient is responsible for. Ex: deductible, co-payment"
+          },
+          "benefit_percentage": {
+            "type": "string",
+            "description": "The percentage amount the patient is responsible for. Ex: co-insurance"
+          },
+          "time_qualifier": {
+            "type": "string",
+            "description": "The benefit billing period. This is to be used with the benefit_amount."
+          }
+        },
+        "description": "TODO"
+      },
+      "Payer": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "A health insurance carrier, which may offer more than one policy.",
+        "required": ["id", "name"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "A unique identifier."
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the payer."
+          }
+        }
+      },
+      "Provider": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "A healthcare provider organization that has been assigned an NPI.",
+        "required": ["organization_name", "npi"],
+        "properties": {
+          "organization_name": {
+            "type": "string",
+            "description": "The name of this provider organization."
+          },
+          "npi": {
+            "type": "string",
+            "description": "The provider organization's National Provider Identifier."
+          }
+        }
+      },
+      "Subscriber": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "An individual member of a health insurance policy. An insured person.",
+        "required": ["first_name", "last_name", "member_id", "date_of_birth"],
+        "properties": {
+          "first_name": {
+            "type": "string",
+            "description": "The insured person's first name, as it appears on their insurance card."
+          },
+          "last_name": {
+            "type": "string",
+            "description": "The insured person's last name, as it appears on their insurance card."
+          },
+          "member_id": {
+            "type": "string",
+            "description": "The insured person's member ID, as it appears on their insurance card."
+          },
+          "date_of_birth": {
+            "type": "string",
+            "format": "date",
+            "description": "The insured person's date of birth, as it appears on their insurance card."
+          }
+        }
+      },
+      "Encounter": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "An object representing an encounter or interaction between a patient and provider, during which medical services may be performed.",
+        "required": ["date_of_service", "service_type_codes"],
+        "properties": {
+          "date_of_service": {
+            "type": "string",
+            "format": "date",
+            "description": "The date of this particular patient encounter."
+          },
+          "service_type_codes": {
+            "type": "array",
+            "description": "A list of service type codes.",
+            "items": {
+              "type": "string",
+              "description": "A valid service type code from this list: https://x12.org/codes/service-type-codes"
+            }
+          }
+        }
+      },
+      "EligibilityInquiry": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "A request for information from a payer about a health insurance policy's coverages, typically in relation to a particular subscriber.",
+        "required": [
+          "id",
+          "provider",
+          "payer",
+          "subscriber",
+          "plan",
+          "benefits"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "A unique identifier."
+          },
+          "provider": {
+            "$ref": "#/components/schemas/Provider"
+          },
+          "payer": {
+            "$ref": "#/components/schemas/Payer"
+          },
+          "subscriber": {
+            "$ref": "#/components/schemas/Subscriber"
+          },
+          "plan": {
+            "$ref": "#/components/schemas/Plan"
+          },
+          "benefits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Benefits"
+            }
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "An object that is returned when an error has occured.",
+        "required": ["code", "message"],
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "A unique error code indicating what went wrong."
+          },
+          "message": {
+            "type": "string",
+            "description": "A brief text description that expands upon this particular error code."
+          }
+        }
+      }
+    },
+    "responses": {
+      "Default": {
+        "description": "A default error response if no other response is provided.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "BasicAuth": {
+        "type": "http",
+        "scheme": "basic",
+        "description": "Basic HTTP authentication. To authenticate, please include this request header: \"Authorization: Basic `<your-base64-encoded-API-key>`\". If you are using a client that asks for a username and password (e.g. curl), provide your API key as the username and omit the password."
+      }
+    }
+  },
+  "security": [
+    {
+      "BasicAuth": []
+    }
+  ]
 }
