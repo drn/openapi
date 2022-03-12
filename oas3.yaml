@@ -281,12 +281,8 @@ components:
       description: TODO
       required:
         - name
-        - coverage_level
         - service_types
         - in_plan_network_indicator
-        - benefit_amount
-        - benefit_percentage
-        - time_qualifier
       properties:
         name:
           type: string
