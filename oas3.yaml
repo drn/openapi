@@ -10,12 +10,130 @@ externalDocs:
 servers:
   - url: https://api.opkit.co/v1
 tags:
-  - name: Manual Eligibility Checks
+  # - name: Manual Eligibility Checks
+  - name: Patients
   - name: Automated Eligibility Checks
   - name: Insurance Cards
   - name: Submissions
+  - name: Settings
 openapi: "3.0.0"
 paths:
+  /settings:
+    get:
+      summary: Get settings
+      tags:
+        - Settings
+      operationId: getSettings
+      parameters:
+        - name: cursor
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
+      responses:
+        200:
+          description: A list of settings
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetSettingsResponse"
+  /patients/{id}:
+    patch:
+      summary: Update a patient
+      tags:
+        - Patients
+      operationId: patchPatientsId
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          "application/json":
+            schema:
+              $ref: "#/components/schemas/PatchPatientsIdPayload"
+      responses:
+        200:
+          description: A single patient
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PatchPatientsIdResponse"
+    get:
+      summary: Get a patient
+      tags:
+        - Patients
+      operationId: getPatientsId
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        200:
+          description: A single patient
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetPatientsIdResponse"
+    delete:
+      summary: Delete a patient
+      tags:
+        - Patients
+      operationId: deletePatientsId
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        200:
+          description: Successfully deleted
+  /patients:
+    get:
+      summary: Get patients
+      tags:
+        - Patients
+      operationId: getPatients
+      parameters:
+        - name: cursor
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
+      responses:
+        200:
+          description: A list of patients
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetPatientsResponse"
+    post:
+      summary: Create a patient
+      tags:
+        - Patients
+      operationId: postPatients
+      requestBody:
+        content:
+          "application/json":
+            schema:
+              $ref: "#/components/schemas/PostPatientsPayload"
+      responses:
+        200:
+          description: A single patient
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/PostPatientsResponse"
   /insurance_cards:
     get:
       summary: Get insurance cards
@@ -42,6 +160,23 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GetInsuranceCardsResponse"
+    post:
+      summary: Create an insurance card
+      tags:
+        - Insurance Cards
+      operationId: postInsuranceCards
+      requestBody:
+        content:
+          "application/json":
+            schema:
+              $ref: "#/components/schemas/PostInsuranceCardsPayload"
+      responses:
+        200:
+          description: A single insurance card
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/PostInsuranceCardsResponse"
   /insurance_cards/{id}:
     get:
       summary: Get a single insurance card
@@ -62,6 +197,45 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GetInsuranceCardsIdResponse"
+    patch:
+      summary: Update an insurance card
+      tags:
+        - Insurance Cards
+      operationId: patchInsuranceCardsId
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          "application/json":
+            schema:
+              $ref: "#/components/schemas/PatchInsuranceCardsIdPayload"
+      responses:
+        200:
+          description: A single insurance card
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PatchInsuranceCardsIdResponse"
+    delete:
+      summary: Delete an insurance card
+      tags:
+        - Insurance Cards
+      operationId: deleteInsuranceCardsId
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        200:
+          description: Successfully deleted
   /submissions:
     get:
       summary: Get submissions
@@ -102,58 +276,58 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GetSubmissionsIdResponse"
-  /manual_eligibility_checks:
-    get:
-      summary: Get manual eligibility checks
-      tags:
-        - Manual Eligibility Checks
-      operationId: getManualEligibilityChecks
-      parameters:
-        - name: cursor
-          in: query
-          required: false
-          schema:
-            type: string
-            format: uuid
-        - name: insurance_card_id
-          in: query
-          required: false
-          schema:
-            type: string
-            format: uuid
-        - name: submission_id
-          in: query
-          required: false
-          schema:
-            type: string
-            format: uuid
-      responses:
-        200:
-          description: A list of manual eligibility checks
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/GetManualEligibilityChecksResponse"
-  /manual_eligibility_checks/{id}:
-    get:
-      summary: Get a single manual eligibility check
-      tags:
-        - Manual Eligibility Checks
-      operationId: getManualEligibilityChecksId
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        200:
-          description: A single manual eligibility check
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/GetManualEligibilityChecksIdResponse"
+  # /manual_eligibility_checks:
+  #   get:
+  #     summary: Get manual eligibility checks
+  #     tags:
+  #       - Manual Eligibility Checks
+  #     operationId: getManualEligibilityChecks
+  #     parameters:
+  #       - name: cursor
+  #         in: query
+  #         required: false
+  #         schema:
+  #           type: string
+  #           format: uuid
+  #       - name: insurance_card_id
+  #         in: query
+  #         required: false
+  #         schema:
+  #           type: string
+  #           format: uuid
+  #       - name: submission_id
+  #         in: query
+  #         required: false
+  #         schema:
+  #           type: string
+  #           format: uuid
+  #     responses:
+  #       200:
+  #         description: A list of manual eligibility checks
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/GetManualEligibilityChecksResponse"
+  # /manual_eligibility_checks/{id}:
+  #   get:
+  #     summary: Get a single manual eligibility check
+  #     tags:
+  #       - Manual Eligibility Checks
+  #     operationId: getManualEligibilityChecksId
+  #     parameters:
+  #       - name: id
+  #         in: path
+  #         required: true
+  #         schema:
+  #           type: string
+  #           format: uuid
+  #     responses:
+  #       200:
+  #         description: A single manual eligibility check
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/GetManualEligibilityChecksIdResponse"
   /automated_eligibility_checks:
     get:
       summary: Get automated eligibility checks
@@ -250,26 +424,26 @@ components:
         cursor:
           type: string
           format: uuid
-    GetManualEligibilityChecksResponse:
-      required:
-        - items
-        - count
-      properties:
-        items:
-          type: array
-          items:
-            $ref: "#/components/schemas/ManualEligibilityCheck"
-        count:
-          type: number
-        cursor:
-          type: string
-          format: uuid
+    # GetManualEligibilityChecksResponse:
+    #   required:
+    #     - items
+    #     - count
+    #   properties:
+    #     items:
+    #       type: array
+    #       items:
+    #         $ref: "#/components/schemas/ManualEligibilityCheck"
+    #     count:
+    #       type: number
+    #     cursor:
+    #       type: string
+    #       format: uuid
     GetInsuranceCardsIdResponse:
       $ref: "#/components/schemas/InsuranceCard"
     GetSubmissionsIdResponse:
       $ref: "#/components/schemas/Submission"
-    GetManualEligibilityChecksIdResponse:
-      $ref: "#/components/schemas/ManualEligibilityCheck"
+    # GetManualEligibilityChecksIdResponse:
+    #   $ref: "#/components/schemas/ManualEligibilityCheck"
     GetAutomatedEligibilityChecksIdResponse:
       $ref: "#/components/schemas/AutomatedEligibilityCheck"
     ExtractionStatus:
@@ -369,41 +543,41 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/X12ServiceTypeCode"
-    ManualEligibilityCheck:
-      required:
-        - id
-        - created_at
-        - insurance_card_id
-        - phone_number
-        - provider_npi
-        - subscriber_first_name
-        - subscriber_last_name
-        - subscriber_date_of_birth
-        - subscriber_member_id
-      properties:
-        id:
-          type: string
-          format: uuid
-        created_at:
-          type: string
-          format: date-time
-        insurance_card_id:
-          type: string
-          format: uuid
-        phone_number:
-          type: string
-        provider_npi:
-          type: string
-        subscriber_first_name:
-          type: string
-        subscriber_last_name:
-          type: string
-        subscriber_date_of_birth:
-          type: string
-          format: date
-          example: "2022-07-21"
-        subscriber_member_id:
-          type: string
+    # ManualEligibilityCheck:
+    #   required:
+    #     - id
+    #     - created_at
+    #     - insurance_card_id
+    #     - phone_number
+    #     - provider_npi
+    #     - subscriber_first_name
+    #     - subscriber_last_name
+    #     - subscriber_date_of_birth
+    #     - subscriber_member_id
+    #   properties:
+    #     id:
+    #       type: string
+    #       format: uuid
+    #     created_at:
+    #       type: string
+    #       format: date-time
+    #     insurance_card_id:
+    #       type: string
+    #       format: uuid
+    #     phone_number:
+    #       type: string
+    #     provider_npi:
+    #       type: string
+    #     subscriber_first_name:
+    #       type: string
+    #     subscriber_last_name:
+    #       type: string
+    #     subscriber_date_of_birth:
+    #       type: string
+    #       format: date
+    #       example: "2022-07-21"
+    #     subscriber_member_id:
+    #       type: string
     X12ServiceTypeCode:
       type: string
       enum:
@@ -597,6 +771,284 @@ components:
         - "TC" # Transitional Care
         - "TN" # Transitional Nursery Care
         - "UC" # Urgent Care
+    PatchPatientsIdPayload:
+      properties:
+        first_name:
+          type: string
+          nullable: true
+        last_name:
+          type: string
+          nullable: true
+        email:
+          type: string
+          nullable: true
+        sex_assigned_at_birth:
+          $ref: "#/components/schemas/AssignedSex"
+          nullable: true
+        state_of_residence:
+          $ref: "#/components/schemas/State"
+          nullable: true
+        zip_code:
+          type: string
+          nullable: true
+        date_of_birth:
+          type: string
+          format: date
+          example: "2022-07-21"
+          nullable: true
+    PatchPatientsIdResponse:
+      $ref: "#/components/schemas/Patient"
+    GetPatientsIdResponse:
+      $ref: "#/components/schemas/Patient"
+    PostPatientsResponse:
+      $ref: "#/components/schemas/Patient"
+    GetPatientsResponse:
+      required:
+        - items
+        - count
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/Patient"
+        count:
+          type: integer
+          format: int64
+    Patient:
+      required:
+        - id
+        - created_at
+        - source
+        - collection_page_url
+      properties:
+        id:
+          type: string
+          format: uuid
+        source:
+          $ref: "#/components/schemas/Source"
+        created_at:
+          type: string
+          format: date-time
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        sex_assigned_at_birth:
+          $ref: "#/components/schemas/AssignedSex"
+        state_of_residence:
+          $ref: "#/components/schemas/State"
+        zip_code:
+          type: string
+        date_of_birth:
+          type: string
+          format: date
+          example: "2022-07-21"
+        collection_page_url:
+          type: string
+    Source:
+      type: string
+      enum: ["collection_page", "dashboard"]
+    AssignedSex:
+      type: string
+      enum:
+        - "male"
+        - "female"
+    State:
+      type: string
+      enum:
+        - "alabama"
+        - "alaska"
+        - "arizona"
+        - "arkansas"
+        - "california"
+        - "colorado"
+        - "connecticut"
+        - "delaware"
+        - "florida"
+        - "georgia"
+        - "hawaii"
+        - "idaho"
+        - "illinois"
+        - "indiana"
+        - "iowa"
+        - "kansas"
+        - "kentucky"
+        - "louisiana"
+        - "maine"
+        - "maryland"
+        - "massachusetts"
+        - "michigan"
+        - "minnesota"
+        - "mississippi"
+        - "missouri"
+        - "montana"
+        - "nebraska"
+        - "nevada"
+        - "new_hampshire"
+        - "new_jersey"
+        - "new_mexico"
+        - "new_york"
+        - "north_carolina"
+        - "north_dakota"
+        - "ohio"
+        - "oklahoma"
+        - "oregon"
+        - "pennsylvania"
+        - "rhode_island"
+        - "south_carolina"
+        - "south_dakota"
+        - "tennessee"
+        - "texas"
+        - "utah"
+        - "vermont"
+        - "virginia"
+        - "washington"
+        - "west_virginia"
+        - "wisconsin"
+        - "wyoming"
+    PostPatientsPayload:
+      required:
+        - source
+      properties:
+        source:
+          $ref: "#/components/schemas/Source"
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        sex_assigned_at_birth:
+          $ref: "#/components/schemas/AssignedSex"
+        state_of_residence:
+          $ref: "#/components/schemas/State"
+        zip_code:
+          type: string
+        date_of_birth:
+          type: string
+          format: date
+          example: "2022-07-21"
+    PatchInsuranceCardsIdPayload:
+      properties:
+        extraction_status:
+          $ref: "#/components/schemas/ExtractionStatus"
+        front_photo_object_key:
+          type: string
+          nullable: true
+        back_photo_object_key:
+          type: string
+          nullable: true
+        member_name:
+          type: string
+          nullable: true
+        member_id:
+          type: string
+          nullable: true
+        group_number:
+          type: string
+          nullable: true
+        insurance_carrier_id:
+          type: string
+          nullable: true
+          format: uuid
+        plan_name:
+          type: string
+          nullable: true
+        rx_bin:
+          type: string
+          nullable: true
+        rx_group:
+          type: string
+          nullable: true
+        rx_pcn:
+          type: string
+          nullable: true
+        dependent_names:
+          type: array
+          nullable: true
+          items:
+            type: string
+    PostInsuranceCardsPayload:
+      required:
+        - patient_id
+      properties:
+        patient_id:
+          type: string
+          format: uuid
+        front_photo_object_key:
+          type: string
+        back_photo_object_key:
+          type: string
+        member_name:
+          type: string
+        member_id:
+          type: string
+        group_number:
+          type: string
+        insurance_carrier_id:
+          type: string
+          format: uuid
+        plan_name:
+          type: string
+        rx_bin:
+          type: string
+        rx_group:
+          type: string
+        rx_pcn:
+          type: string
+        dependent_names:
+          type: array
+          items:
+            type: string
+    PostInsuranceCardsResponse:
+      $ref: "#/components/schemas/InsuranceCard"
+    PatchInsuranceCardsIdResponse:
+      $ref: "#/components/schemas/InsuranceCard"
+    GetSettingsResponse:
+      required:
+        - items
+        - count
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/Settings"
+        count:
+          type: integer
+          format: int64
+    Settings:
+      required:
+        - id
+        - created_at
+        - collection_page_url
+        - webhook_url
+        - redirect_url
+        - eligibility_checks_enabled
+        # - manual_eligibility_checks_enabled
+        - automated_eligibility_check_service_type_codes
+      properties:
+        id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        collection_page_url:
+          type: string
+        webhook_url:
+          type: string
+        redirect_url:
+          type: string
+        eligibility_checks_enabled:
+          type: boolean
+        # manual_eligibility_checks_enabled:
+        #   type: boolean
+        automated_eligibility_check_service_type_codes:
+          type: array
+          items:
+            $ref: "#/components/schemas/X12ServiceTypeCode"
   securitySchemes:
     bearerAuth:
       type: http

@@ -54,7 +54,10 @@
             "group": "Insurance Cards",
             "pages": [
                 "api-reference/insurance-cards/get-insurance-cards",
-                "api-reference/insurance-cards/get-single-insurance-card"
+                "api-reference/insurance-cards/get-single-insurance-card",
+                "api-reference/insurance-cards/create-insurance-card",
+                "api-reference/insurance-cards/update-insurance-card",
+                "api-reference/insurance-cards/delete-insurance-card"
             ]
         },
         {
@@ -65,10 +68,13 @@
             ]
         },
         {
-            "group": "Manual Eligibility Checks",
+            "group": "Patients",
             "pages": [
-                "api-reference/manual-eligibility-checks/get-manual-eligibility-checks",
-                "api-reference/manual-eligibility-checks/get-single-manual-eligibility-check"
+                "api-reference/patients/get-patients",
+                "api-reference/patients/get-single-patient",
+                "api-reference/patients/create-patient",
+                "api-reference/patients/update-patient",
+                "api-reference/patients/delete-patient"
             ]
         },
         {
