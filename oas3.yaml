@@ -15,8 +15,29 @@ tags:
   - name: Automated Eligibility Checks
   - name: Insurance Cards
   - name: Submissions
+  - name: Settings
 openapi: "3.0.0"
 paths:
+  /settings:
+    get:
+      summary: Get settings
+      tags:
+        - Settings
+      operationId: getSettings
+      parameters:
+        - name: cursor
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
+      responses:
+        200:
+          description: A list of settings
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetSettingsResponse"
   /patients/{id}:
     patch:
       summary: Update a patient
@@ -798,6 +819,7 @@ components:
         - id
         - created_at
         - source
+        - collection_page_url
       properties:
         id:
           type: string
@@ -823,6 +845,8 @@ components:
           type: string
           format: date
           example: "2022-07-21"
+        collection_page_url:
+          type: string
     Source:
       type: string
       enum: ["collection_page", "dashboard"]
@@ -982,6 +1006,49 @@ components:
       $ref: "#/components/schemas/InsuranceCard"
     PatchInsuranceCardsIdResponse:
       $ref: "#/components/schemas/InsuranceCard"
+    GetSettingsResponse:
+      required:
+        - items
+        - count
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/Settings"
+        count:
+          type: integer
+          format: int64
+    Settings:
+      required:
+        - id
+        - created_at
+        - collection_page_url
+        - webhook_url
+        - redirect_url
+        - eligibility_checks_enabled
+        # - manual_eligibility_checks_enabled
+        - automated_eligibility_check_service_type_codes
+      properties:
+        id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        collection_page_url:
+          type: string
+        webhook_url:
+          type: string
+        redirect_url:
+          type: string
+        eligibility_checks_enabled:
+          type: boolean
+        # manual_eligibility_checks_enabled:
+        #   type: boolean
+        automated_eligibility_check_service_type_codes:
+          type: array
+          items:
+            $ref: "#/components/schemas/X12ServiceTypeCode"
   securitySchemes:
     bearerAuth:
       type: http
