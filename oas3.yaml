@@ -139,21 +139,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GetInsuranceCardsResponse"
-    delete:
-      summary: Delete an insurance card
-      tags:
-        - Insurance Cards
-      operationId: deleteInsuranceCardsId
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        200:
-          description: Successfully deleted
     post:
       summary: Create an insurance card
       tags:
@@ -172,6 +157,21 @@ paths:
               schema:
                 $ref: "#/components/schemas/PostInsuranceCardsResponse"
   /insurance_cards/{id}:
+    delete:
+      summary: Delete an insurance card
+      tags:
+        - Insurance Cards
+      operationId: deleteInsuranceCardsId
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        200:
+          description: Successfully deleted
     get:
       summary: Get a single insurance card
       tags:
