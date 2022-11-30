@@ -359,12 +359,6 @@ paths:
           schema:
             type: string
             format: uuid
-        - name: submission_id
-          in: query
-          required: false
-          schema:
-            type: string
-            format: uuid
       responses:
         200:
           description: A list of automated eligibility checks
@@ -803,6 +797,9 @@ components:
         zip_code:
           type: string
           nullable: true
+        reference_id:
+          type: string
+          nullable: true
         date_of_birth:
           type: string
           format: date
@@ -858,6 +855,8 @@ components:
           format: date
           example: "2022-07-21"
         collection_page_url:
+          type: string
+        reference_id:
           type: string
     Source:
       type: string
@@ -921,11 +920,7 @@ components:
         - "wisconsin"
         - "wyoming"
     PostPatientsPayload:
-      required:
-        - source
       properties:
-        source:
-          $ref: "#/components/schemas/Source"
         first_name:
           type: string
         last_name:
@@ -942,6 +937,8 @@ components:
           type: string
           format: date
           example: "2022-07-21"
+        reference_id:
+          type: string
     PatchInsuranceCardsIdPayload:
       properties:
         extraction_status:
