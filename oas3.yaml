@@ -12,6 +12,7 @@ servers:
 tags:
   # - name: Manual Eligibility Checks
   - name: Patients
+  - name: Extractions
   - name: Automated Eligibility Checks
   - name: Insurance Cards
   - name: Submissions
@@ -38,6 +39,69 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GetSettingsResponse"
+  /extractions/{id}:
+    get:
+      summary: Get an extraction
+      tags:
+        - Extractions
+      operationId: getExtractionsId
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        200:
+          description: A single extraction
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetExtractionsIdResponse"
+  /extractions:
+    get:
+      summary: Get extractions
+      tags:
+        - Extractions
+      operationId: getExtractions
+      parameters:
+        - name: cursor
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - name: insurance_card_id
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
+      responses:
+        200:
+          description: A list of extractions
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetExtractionsResponse"
+    post:
+      summary: Create an extraction
+      tags:
+        - Extractions
+      operationId: postExtractions
+      requestBody:
+        content:
+          "application/json":
+            schema:
+              $ref: "#/components/schemas/PostExtractionsPayload"
+      responses:
+        200:
+          description: A single extraction
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/PostExtractionsResponse"
   /patients/{id}:
     patch:
       summary: Update a patient
@@ -465,7 +529,6 @@ components:
         - created_at
         - front_photo_download_url
         - back_photo_download_url
-        - extraction_status
       properties:
         id:
           type: string
@@ -480,11 +543,6 @@ components:
           type: string
         back_photo_download_url:
           type: string
-        extraction_status:
-          $ref: "#/components/schemas/ExtractionStatus"
-        finished_extraction_at:
-          type: string
-          format: date-time
         member_name:
           type: string
         member_id:
@@ -941,8 +999,6 @@ components:
           type: string
     PatchInsuranceCardsIdPayload:
       properties:
-        extraction_status:
-          $ref: "#/components/schemas/ExtractionStatus"
         front_photo_object_key:
           type: string
           nullable: true
@@ -1058,6 +1114,50 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/X12ServiceTypeCode"
+    Extraction:
+      required:
+        - id
+        - created_at
+        - insurance_card_id
+        - status
+      properties:
+        id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        insurance_card_id:
+          type: string
+          format: uuid
+        status:
+          $ref: "#/components/schemas/ExtractionStatus"
+        finished_at:
+          type: string
+          format: date-time
+    GetExtractionsIdResponse:
+      $ref: "#/components/schemas/Extraction"
+    GetExtractionsResponse:
+      required:
+        - items
+        - count
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/Extraction"
+        count:
+          type: integer
+          format: int64
+    PostExtractionsPayload:
+      required:
+        - insurance_card_id
+      properties:
+        insurance_card_id:
+          type: string
+          format: uuid
+    PostExtractionsResponse:
+      $ref: "#/components/schemas/Extraction"
   securitySchemes:
     bearerAuth:
       type: http
