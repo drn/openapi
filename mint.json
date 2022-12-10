@@ -61,6 +61,14 @@
             ]
         },
         {
+            "group": "Extractions",
+            "pages": [
+                "api-reference/extractions/get-extractions",
+                "api-reference/extractions/get-single-extraction",
+                "api-reference/extractions/create-extraction"
+            ]
+        },
+        {
             "group": "Submissions",
             "pages": [
                 "api-reference/submissions/get-submissions",
@@ -83,7 +91,13 @@
                 "api-reference/automated-eligibility-checks/get-automated-eligibility-checks",
                 "api-reference/automated-eligibility-checks/get-single-automated-eligibility-check"
             ]
-        }
+        },
+        {
+            "group": "Settings",
+            "pages": [
+                "api-reference/settings/get-settings",
+            ]
+        },
     ],
     "footerSocials": {
         "github": "https://github.com/opkit-co/openapi",
