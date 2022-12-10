@@ -95,9 +95,9 @@
         {
             "group": "Settings",
             "pages": [
-                "api-reference/settings/get-settings",
+                "api-reference/settings/get-settings"
             ]
-        },
+        }
     ],
     "footerSocials": {
         "github": "https://github.com/opkit-co/openapi",
