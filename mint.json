@@ -61,6 +61,12 @@
             ]
         },
         {
+            "group": "Insurance Plan Statuses",
+            "pages": [
+                "api-reference/insurance-plan-statuses/get-insurance-plan-statuses"
+            ]
+        },
+        {
             "group": "Extractions",
             "pages": [
                 "api-reference/extractions/get-extractions",

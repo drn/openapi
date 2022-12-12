@@ -15,6 +15,7 @@ tags:
   - name: Extractions
   - name: Automated Eligibility Checks
   - name: Insurance Cards
+  - name: Insurance Plan Statuses
   - name: Submissions
   - name: Settings
 openapi: "3.0.0"
@@ -59,6 +60,32 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GetExtractionsIdResponse"
+  /insurance_plan_statuses:
+    get:
+      summary: Get insurance_plan_statuses
+      tags:
+        - Insurance Plan Statuses
+      operationId: getInsurancePlanStatuses
+      parameters:
+        - name: cursor
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - name: insurance_card_id
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
+      responses:
+        200:
+          description: A list of insurance plan statuses
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetInsurancePlanStatusesResponse"
   /extractions:
     get:
       summary: Get extractions
@@ -519,9 +546,6 @@ components:
     ExtractionStatus:
       type: string
       enum: ["in_progress", "success", "failure"]
-    PlanStatus:
-      type: string
-      enum: ["active", "inactive"]
     InsuranceCard:
       required:
         - id
@@ -563,6 +587,11 @@ components:
           type: array
           items:
             type: string
+        plan_status:
+          $ref: "#/components/schemas/InsurancePlanStatus"
+        plan_status_fetched_at:
+          type: string
+          format: date-time
     Submission:
       required:
         - id
@@ -1114,6 +1143,31 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/X12ServiceTypeCode"
+    InsurancePlanStatusValue:
+      type: string
+      enum: ["active", "inactive"]
+    InsurancePlanStatus:
+      required:
+        - id
+        - created_at
+        - insurance_card_id
+        - automated_eligibility_check_id
+        - value
+      properties:
+        id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        insurance_card_id:
+          type: string
+          format: uuid
+        automated_eligibility_check_id:
+          type: string
+          format: uuid
+        value:
+          $ref: "#/components/schemas/InsurancePlanStatusValue"
     Extraction:
       required:
         - id
@@ -1137,6 +1191,18 @@ components:
           format: date-time
     GetExtractionsIdResponse:
       $ref: "#/components/schemas/Extraction"
+    GetInsurancePlanStatusesResponse:
+      required:
+        - items
+        - count
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/InsurancePlanStatus"
+        count:
+          type: integer
+          format: int64
     GetExtractionsResponse:
       required:
         - items
