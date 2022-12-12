@@ -13,7 +13,8 @@ tags:
   # - name: Manual Eligibility Checks
   - name: Patients
   - name: Extractions
-  - name: Automated Eligibility Checks
+  - name: Electronic Eligibility Checks
+  - name: Electronic Eligibility Discoveries
   - name: Insurance Cards
   - name: Insurance Plan Statuses
   - name: Submissions
@@ -40,6 +41,26 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GetSettingsResponse"
+  /electronic_eligibility_discoveries/{id}:
+    get:
+      summary: Get an electronic eligibility discovery
+      tags:
+        - Electronic Eligibility Discoveries
+      operationId: getElectronicEligibilityDiscoveriesId
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        200:
+          description: A single electronic eligibility discovery
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetElectronicEligibilityDiscoveriesIdResponse"
   /extractions/{id}:
     get:
       summary: Get an extraction
@@ -86,6 +107,49 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GetInsurancePlanStatusesResponse"
+  /electronic_eligibility_discoveries:
+    get:
+      summary: Get electronic eligibility discoveries
+      tags:
+        - Electronic Eligibility Discoveries
+      operationId: getElectronicEligibilityDiscoveries
+      parameters:
+        - name: cursor
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - name: insurance_card_id
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
+      responses:
+        200:
+          description: A list of electronic eligibility discoveries
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetElectronicEligibilityDiscoveriesResponse"
+    post:
+      summary: Create an electronic eligibility discovery
+      tags:
+        - ElectronicEligibilityDiscoveries
+      operationId: postElectronicEligibilityDiscoveries
+      requestBody:
+        content:
+          "application/json":
+            schema:
+              $ref: "#/components/schemas/PostElectronicEligibilityDiscoveriesPayload"
+      responses:
+        200:
+          description: A single electronic eligibility discovery
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/PostElectronicEligibilityDiscoveriesResponse"
   /extractions:
     get:
       summary: Get extractions
@@ -431,12 +495,12 @@ paths:
   #           application/json:
   #             schema:
   #               $ref: "#/components/schemas/GetManualEligibilityChecksIdResponse"
-  /automated_eligibility_checks:
+  /electronic_eligibility_checks:
     get:
-      summary: Get automated eligibility checks
+      summary: Get electronic eligibility checks
       tags:
-        - Automated Eligibility Checks
-      operationId: getAutomatedEligibilityChecks
+        - Electronic Eligibility Checks
+      operationId: getElectronicEligibilityChecks
       parameters:
         - name: cursor
           in: query
@@ -452,17 +516,17 @@ paths:
             format: uuid
       responses:
         200:
-          description: A list of automated eligibility checks
+          description: A list of electronic eligibility checks
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/GetAutomatedEligibilityChecksResponse"
-  /automated_eligibility_checks/{id}:
+                $ref: "#/components/schemas/GetElectronicEligibilityChecksResponse"
+  /electronic_eligibility_checks/{id}:
     get:
-      summary: Get a single automated eligibility check
+      summary: Get a single electronic eligibility check
       tags:
-        - Automated Eligibility Checks
-      operationId: getAutomatedEligibilityChecksId
+        - Electronic Eligibility Checks
+      operationId: getElectronicEligibilityChecksId
       parameters:
         - name: id
           in: path
@@ -472,11 +536,11 @@ paths:
             format: uuid
       responses:
         200:
-          description: A single automated eligibility check
+          description: A single electronic eligibility check
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/GetAutomatedEligibilityChecksIdResponse"
+                $ref: "#/components/schemas/GetElectronicEligibilityChecksIdResponse"
 components:
   schemas:
     GetInsuranceCardsResponse:
@@ -507,7 +571,7 @@ components:
         cursor:
           type: string
           format: uuid
-    GetAutomatedEligibilityChecksResponse:
+    GetElectronicEligibilityChecksResponse:
       required:
         - items
         - count
@@ -515,7 +579,7 @@ components:
         items:
           type: array
           items:
-            $ref: "#/components/schemas/AutomatedEligibilityCheck"
+            $ref: "#/components/schemas/ElectronicEligibilityCheck"
         count:
           type: number
         cursor:
@@ -541,8 +605,8 @@ components:
       $ref: "#/components/schemas/Submission"
     # GetManualEligibilityChecksIdResponse:
     #   $ref: "#/components/schemas/ManualEligibilityCheck"
-    GetAutomatedEligibilityChecksIdResponse:
-      $ref: "#/components/schemas/AutomatedEligibilityCheck"
+    GetElectronicEligibilityChecksIdResponse:
+      $ref: "#/components/schemas/ElectronicEligibilityCheck"
     ExtractionStatus:
       type: string
       enum: ["in_progress", "success", "failure"]
@@ -599,7 +663,7 @@ components:
         id:
           type: string
           format: uuid
-    AutomatedEligibilityCheck:
+    ElectronicEligibilityCheck:
       required:
         - id
         - created_at
@@ -1121,7 +1185,7 @@ components:
         - redirect_url
         - eligibility_checks_enabled
         # - manual_eligibility_checks_enabled
-        - automated_eligibility_check_service_type_codes
+        - electronic_eligibility_check_service_type_codes
       properties:
         id:
           type: string
@@ -1139,7 +1203,7 @@ components:
           type: boolean
         # manual_eligibility_checks_enabled:
         #   type: boolean
-        automated_eligibility_check_service_type_codes:
+        electronic_eligibility_check_service_type_codes:
           type: array
           items:
             $ref: "#/components/schemas/X12ServiceTypeCode"
@@ -1151,7 +1215,7 @@ components:
         - id
         - created_at
         - insurance_card_id
-        - automated_eligibility_check_id
+        - electronic_eligibility_check_id
         - value
       properties:
         id:
@@ -1163,7 +1227,7 @@ components:
         insurance_card_id:
           type: string
           format: uuid
-        automated_eligibility_check_id:
+        electronic_eligibility_check_id:
           type: string
           format: uuid
         value:
@@ -1224,6 +1288,52 @@ components:
           format: uuid
     PostExtractionsResponse:
       $ref: "#/components/schemas/Extraction"
+    ElectronicEligibilityDiscovery:
+      required:
+        - id
+        - created_at
+        - insurance_card_id
+        - patient_id
+      properties:
+        id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        insurance_card_id:
+          type: string
+          format: uuid
+        patient_id:
+          type: string
+          format: uuid
+    GetElectronicEligibilityDiscoveriesIdResponse:
+      $ref: "#/components/schemas/ElectronicEligibilityDiscovery"
+    GetElectronicEligibilityDiscoveriesResponse:
+      required:
+        - items
+        - count
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/InsurancePlanStatus"
+        count:
+          type: integer
+          format: int64
+    PostElectronicEligibilityDiscoveriesPayload:
+      required:
+        - insurance_card_id
+        - patient_id
+      properties:
+        insurance_card_id:
+          type: string
+          format: uuid
+        patient_id:
+          type: string
+          format: uuid
+    PostElectronicEligibilityDiscoveriesResponse:
+      $ref: "#/components/schemas/ElectronicEligibilityDiscovery"
   securitySchemes:
     bearerAuth:
       type: http
