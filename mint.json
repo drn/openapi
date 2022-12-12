@@ -92,10 +92,18 @@
             ]
         },
         {
-            "group": "Automated Eligibility Checks",
+            "group": "Electronic Eligibility Checks",
             "pages": [
-                "api-reference/automated-eligibility-checks/get-automated-eligibility-checks",
-                "api-reference/automated-eligibility-checks/get-single-automated-eligibility-check"
+                "api-reference/electronic-eligibility-checks/get-electronic-eligibility-checks",
+                "api-reference/electronic-eligibility-checks/get-single-electronic-eligibility-check"
+            ]
+        },
+        {
+            "group": "Electronic Eligibility Discoveries",
+            "pages": [
+                "api-reference/electronic-eligibility-discoveries/get-electronic-eligibility-discoveries",
+                "api-reference/electronic-eligibility-discoveries/get-single-electronic-eligibility-discovery",
+                "api-reference/electronic-eligibility-discoveries/create-electronic-eligibility-discovery"
             ]
         },
         {
