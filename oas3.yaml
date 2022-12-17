@@ -18,7 +18,6 @@ tags:
   - name: Insurance Cards
   - name: Insurance Plan Statuses
   - name: Insurance Carriers
-  - name: Pharmacy Benefit Managers
   - name: Submissions
   - name: Settings
 openapi: "3.0.0"
@@ -297,26 +296,6 @@ paths:
             "application/json":
               schema:
                 $ref: "#/components/schemas/PostPatientsResponse"
-  /pharmacy_benefit_managers:
-    get:
-      summary: Get pharmacy benefit managers
-      tags:
-        - Pharmacy Benefit Manager
-      operationId: getPharmacyBenefitManagers
-      parameters:
-        - name: cursor
-          in: query
-          required: false
-          schema:
-            type: string
-            format: uuid
-      responses:
-        200:
-          description: A list of pharmacy benefit managers
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/GetPharmacyBenefitManagersResponse"
   /insurance_carriers:
     get:
       summary: Get insurance carriers
@@ -686,8 +665,6 @@ components:
         group_number:
           type: string
         insurance_carrier_name:
-          type: string
-        pharmacy_benefit_manager_name:
           type: string
         plan_name:
           type: string
@@ -1161,10 +1138,6 @@ components:
           type: string
           nullable: true
           format: uuid
-        pharmacy_benefit_manager_id:
-          type: string
-          nullable: true
-          format: uuid
         plan_name:
           type: string
           nullable: true
@@ -1200,9 +1173,6 @@ components:
         group_number:
           type: string
         insurance_carrier_id:
-          type: string
-          format: uuid
-        pharmacy_benefit_manager_id:
           type: string
           format: uuid
         plan_name:
@@ -1348,20 +1318,6 @@ components:
           format: uuid
     PostExtractionsResponse:
       $ref: "#/components/schemas/Extraction"
-    PharmacyBenefitManager:
-      required:
-        - id
-        - created_at
-        - name
-      properties:
-        id:
-          type: string
-          format: uuid
-        created_at:
-          type: string
-          format: date-time
-        name:
-          type: string
     InsuranceCarrier:
       required:
         - id
@@ -1400,18 +1356,6 @@ components:
           $ref: "#/components/schemas/ElectronicEligibilityDiscoveryStatus"
     GetElectronicEligibilityDiscoveriesIdResponse:
       $ref: "#/components/schemas/ElectronicEligibilityDiscovery"
-    GetPharmacyBenefitManagersResponse:
-      required:
-        - items
-        - count
-      properties:
-        items:
-          type: array
-          items:
-            $ref: "#/components/schemas/PharmacyBenefitManager"
-        count:
-          type: integer
-          format: int64
     GetInsuranceCarriersResponse:
       required:
         - items

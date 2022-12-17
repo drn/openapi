@@ -113,12 +113,6 @@
             ]
         },
         {
-            "group": "Pharmacy Benefit Managers",
-            "pages": [
-                "api-reference/pharmacy-benefit-managers/get-pharmacy-benefit-managers"
-            ]
-        },
-        {
             "group": "Settings",
             "pages": [
                 "api-reference/settings/get-settings"
