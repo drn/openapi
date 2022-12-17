@@ -654,7 +654,6 @@ components:
         - subscriber_first_name
         - subscriber_last_name
         - subscriber_date_of_birth
-        - subscriber_member_id
         - service_type_code
         - status
       properties:
