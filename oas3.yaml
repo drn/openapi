@@ -1334,7 +1334,7 @@ components:
         items:
           type: array
           items:
-            $ref: "#/components/schemas/InsurancePlanStatus"
+            $ref: "#/components/schemas/ElectronicEligibilityDiscovery"
         count:
           type: integer
           format: int64
