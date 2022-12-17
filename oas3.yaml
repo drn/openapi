@@ -1337,10 +1337,13 @@ components:
     PostElectronicEligibilityDiscoveriesPayload:
       required:
         - insurance_card_id
+        - provider_npi
       properties:
         insurance_card_id:
           type: string
           format: uuid
+        provider_npi:
+          type: string
     PostElectronicEligibilityDiscoveriesResponse:
       $ref: "#/components/schemas/ElectronicEligibilityDiscovery"
     PostElectronicEligibilityChecksPayload:
