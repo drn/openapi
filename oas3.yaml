@@ -29,7 +29,7 @@ paths:
         - Settings
       operationId: getSettings
       parameters:
-        - name: cursor
+        - name: after
           in: query
           required: false
           schema:
@@ -89,7 +89,7 @@ paths:
         - Insurance Plan Statuses
       operationId: getInsurancePlanStatuses
       parameters:
-        - name: cursor
+        - name: after
           in: query
           required: false
           schema:
@@ -115,7 +115,7 @@ paths:
         - Electronic Eligibility Discoveries
       operationId: getElectronicEligibilityDiscoveries
       parameters:
-        - name: cursor
+        - name: after
           in: query
           required: false
           schema:
@@ -158,7 +158,7 @@ paths:
         - Extractions
       operationId: getExtractions
       parameters:
-        - name: cursor
+        - name: after
           in: query
           required: false
           schema:
@@ -260,7 +260,7 @@ paths:
         - Patients
       operationId: getPatients
       parameters:
-        - name: cursor
+        - name: after
           in: query
           required: false
           schema:
@@ -303,7 +303,7 @@ paths:
         - Clearinghouse Entities
       operationId: getInsuranceCarriers
       parameters:
-        - name: cursor
+        - name: after
           in: query
           required: false
           schema:
@@ -323,7 +323,7 @@ paths:
         - Insurance Carriers
       operationId: getInsuranceCarriers
       parameters:
-        - name: cursor
+        - name: after
           in: query
           required: false
           schema:
@@ -343,7 +343,7 @@ paths:
         - Insurance Cards
       operationId: getInsuranceCards
       parameters:
-        - name: cursor
+        - name: after
           in: query
           required: false
           schema:
@@ -451,7 +451,7 @@ paths:
         - Submissions
       operationId: getSubmissions
       parameters:
-        - name: cursor
+        - name: after
           in: query
           required: false
           schema:
@@ -491,7 +491,7 @@ paths:
         - Electronic Eligibility Checks
       operationId: getElectronicEligibilityChecks
       parameters:
-        - name: cursor
+        - name: after
           in: query
           required: false
           schema:
@@ -560,7 +560,7 @@ components:
             $ref: "#/components/schemas/InsuranceCard"
         count:
           type: number
-        cursor:
+        after:
           type: string
           format: uuid
     GetSubmissionsResponse:
@@ -574,7 +574,7 @@ components:
             $ref: "#/components/schemas/Submission"
         count:
           type: number
-        cursor:
+        after:
           type: string
           format: uuid
     GetElectronicEligibilityChecksResponse:
@@ -588,7 +588,7 @@ components:
             $ref: "#/components/schemas/ElectronicEligibilityCheck"
         count:
           type: number
-        cursor:
+        after:
           type: string
           format: uuid
     GetInsuranceCardsIdResponse:
