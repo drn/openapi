@@ -560,9 +560,6 @@ components:
             $ref: "#/components/schemas/InsuranceCard"
         count:
           type: number
-        after:
-          type: string
-          format: uuid
     GetSubmissionsResponse:
       required:
         - items
@@ -574,9 +571,6 @@ components:
             $ref: "#/components/schemas/Submission"
         count:
           type: number
-        after:
-          type: string
-          format: uuid
     GetElectronicEligibilityChecksResponse:
       required:
         - items
@@ -588,9 +582,6 @@ components:
             $ref: "#/components/schemas/ElectronicEligibilityCheck"
         count:
           type: number
-        after:
-          type: string
-          format: uuid
     GetInsuranceCardsIdResponse:
       $ref: "#/components/schemas/InsuranceCard"
     GetSubmissionsIdResponse:
