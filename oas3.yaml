@@ -633,7 +633,7 @@ components:
           items:
             type: string
         plan_status:
-          $ref: "#/components/schemas/InsurancePlanStatus"
+          $ref: "#/components/schemas/InsurancePlanStatusValue"
         plan_status_fetched_at:
           type: string
           format: date-time
