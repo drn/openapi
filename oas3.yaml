@@ -594,10 +594,7 @@ components:
     InsuranceCard:
       required:
         - id
-        - submission_id
         - created_at
-        - front_photo_download_url
-        - back_photo_download_url
       properties:
         id:
           type: string
