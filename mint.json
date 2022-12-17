@@ -51,6 +51,16 @@
             ]
         },
         {
+            "group": "Patients",
+            "pages": [
+                "api-reference/patients/get-patients",
+                "api-reference/patients/get-single-patient",
+                "api-reference/patients/create-patient",
+                "api-reference/patients/update-patient",
+                "api-reference/patients/delete-patient"
+            ]
+        },
+        {
             "group": "Insurance Cards",
             "pages": [
                 "api-reference/insurance-cards/get-insurance-cards",
@@ -75,27 +85,23 @@
             ]
         },
         {
-            "group": "Submissions",
+            "group": "Insurance Carriers",
             "pages": [
-                "api-reference/submissions/get-submissions",
-                "api-reference/submissions/get-single-submission"
-            ]
-        },
-        {
-            "group": "Patients",
-            "pages": [
-                "api-reference/patients/get-patients",
-                "api-reference/patients/get-single-patient",
-                "api-reference/patients/create-patient",
-                "api-reference/patients/update-patient",
-                "api-reference/patients/delete-patient"
+                "api-reference/insurance-carriers/get-insurance-carriers"
             ]
         },
         {
             "group": "Electronic Eligibility Checks",
             "pages": [
                 "api-reference/electronic-eligibility-checks/get-electronic-eligibility-checks",
-                "api-reference/electronic-eligibility-checks/get-single-electronic-eligibility-check"
+                "api-reference/electronic-eligibility-checks/get-single-electronic-eligibility-check",
+                "api-reference/electronic-eligibility-checks/create-electronic-eligibility-check"
+            ]
+        },
+        {
+            "group": "Clearinghouse Entities",
+            "pages": [
+                "api-reference/clearinghouse-entities/get-clearinghouse-entities"
             ]
         },
         {
@@ -107,9 +113,10 @@
             ]
         },
         {
-            "group": "Insurance Carriers",
+            "group": "Submissions",
             "pages": [
-                "api-reference/insurance-carriers/get-insurance-carriers"
+                "api-reference/submissions/get-submissions",
+                "api-reference/submissions/get-single-submission"
             ]
         },
         {
