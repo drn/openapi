@@ -10,15 +10,14 @@ externalDocs:
 servers:
   - url: https://api.opkit.co/v1
 tags:
-  # - name: Manual Eligibility Checks
   - name: Patients
+  - name: Insurance Cards
+  - name: Insurance Carriers
   - name: Extractions
   - name: Electronic Eligibility Checks
+  - name: Clearinghouse Entities
   - name: Electronic Eligibility Discoveries
-  - name: Insurance Cards
   - name: Insurance Plan Statuses
-  - name: Insurance Carriers
-  - name: Pharmacy Benefit Managers
   - name: Submissions
   - name: Settings
 openapi: "3.0.0"
@@ -30,7 +29,7 @@ paths:
         - Settings
       operationId: getSettings
       parameters:
-        - name: cursor
+        - name: after
           in: query
           required: false
           schema:
@@ -90,7 +89,7 @@ paths:
         - Insurance Plan Statuses
       operationId: getInsurancePlanStatuses
       parameters:
-        - name: cursor
+        - name: after
           in: query
           required: false
           schema:
@@ -116,7 +115,7 @@ paths:
         - Electronic Eligibility Discoveries
       operationId: getElectronicEligibilityDiscoveries
       parameters:
-        - name: cursor
+        - name: after
           in: query
           required: false
           schema:
@@ -138,7 +137,7 @@ paths:
     post:
       summary: Create an electronic eligibility discovery
       tags:
-        - ElectronicEligibilityDiscoveries
+        - Electronic Eligibility Discoveries
       operationId: postElectronicEligibilityDiscoveries
       requestBody:
         content:
@@ -159,7 +158,7 @@ paths:
         - Extractions
       operationId: getExtractions
       parameters:
-        - name: cursor
+        - name: after
           in: query
           required: false
           schema:
@@ -261,7 +260,7 @@ paths:
         - Patients
       operationId: getPatients
       parameters:
-        - name: cursor
+        - name: after
           in: query
           required: false
           schema:
@@ -297,14 +296,14 @@ paths:
             "application/json":
               schema:
                 $ref: "#/components/schemas/PostPatientsResponse"
-  /pharmacy_benefit_managers:
+  /clearinghouse_entities:
     get:
-      summary: Get pharmacy benefit managers
+      summary: Get clearinghouse entities
       tags:
-        - Pharmacy Benefit Manager
-      operationId: getPharmacyBenefitManagers
+        - Clearinghouse Entities
+      operationId: getInsuranceCarriers
       parameters:
-        - name: cursor
+        - name: after
           in: query
           required: false
           schema:
@@ -312,11 +311,11 @@ paths:
             format: uuid
       responses:
         200:
-          description: A list of pharmacy benefit managers
+          description: A list of clearinghouse entities
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/GetPharmacyBenefitManagersResponse"
+                $ref: "#/components/schemas/GetClearinghouseEntitiesResponse"
   /insurance_carriers:
     get:
       summary: Get insurance carriers
@@ -324,7 +323,7 @@ paths:
         - Insurance Carriers
       operationId: getInsuranceCarriers
       parameters:
-        - name: cursor
+        - name: after
           in: query
           required: false
           schema:
@@ -344,7 +343,7 @@ paths:
         - Insurance Cards
       operationId: getInsuranceCards
       parameters:
-        - name: cursor
+        - name: after
           in: query
           required: false
           schema:
@@ -452,7 +451,7 @@ paths:
         - Submissions
       operationId: getSubmissions
       parameters:
-        - name: cursor
+        - name: after
           in: query
           required: false
           schema:
@@ -485,58 +484,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GetSubmissionsIdResponse"
-  # /manual_eligibility_checks:
-  #   get:
-  #     summary: Get manual eligibility checks
-  #     tags:
-  #       - Manual Eligibility Checks
-  #     operationId: getManualEligibilityChecks
-  #     parameters:
-  #       - name: cursor
-  #         in: query
-  #         required: false
-  #         schema:
-  #           type: string
-  #           format: uuid
-  #       - name: insurance_card_id
-  #         in: query
-  #         required: false
-  #         schema:
-  #           type: string
-  #           format: uuid
-  #       - name: submission_id
-  #         in: query
-  #         required: false
-  #         schema:
-  #           type: string
-  #           format: uuid
-  #     responses:
-  #       200:
-  #         description: A list of manual eligibility checks
-  #         content:
-  #           application/json:
-  #             schema:
-  #               $ref: "#/components/schemas/GetManualEligibilityChecksResponse"
-  # /manual_eligibility_checks/{id}:
-  #   get:
-  #     summary: Get a single manual eligibility check
-  #     tags:
-  #       - Manual Eligibility Checks
-  #     operationId: getManualEligibilityChecksId
-  #     parameters:
-  #       - name: id
-  #         in: path
-  #         required: true
-  #         schema:
-  #           type: string
-  #           format: uuid
-  #     responses:
-  #       200:
-  #         description: A single manual eligibility check
-  #         content:
-  #           application/json:
-  #             schema:
-  #               $ref: "#/components/schemas/GetManualEligibilityChecksIdResponse"
   /electronic_eligibility_checks:
     get:
       summary: Get electronic eligibility checks
@@ -544,19 +491,13 @@ paths:
         - Electronic Eligibility Checks
       operationId: getElectronicEligibilityChecks
       parameters:
-        - name: cursor
+        - name: after
           in: query
           required: false
           schema:
             type: string
             format: uuid
         - name: insurance_card_id
-          in: query
-          required: false
-          schema:
-            type: string
-            format: uuid
-        - name: patient_id
           in: query
           required: false
           schema:
@@ -569,6 +510,23 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GetElectronicEligibilityChecksResponse"
+    post:
+      summary: Create an electronic eligibility check
+      tags:
+        - Electronic Eligibility Checks
+      operationId: postElectronicEligibilityChecks
+      requestBody:
+        content:
+          "application/json":
+            schema:
+              $ref: "#/components/schemas/PostElectronicEligibilityChecksPayload"
+      responses:
+        200:
+          description: A single electronic eligibility check
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/PostElectronicEligibilityChecksResponse"
   /electronic_eligibility_checks/{id}:
     get:
       summary: Get a single electronic eligibility check
@@ -602,9 +560,6 @@ components:
             $ref: "#/components/schemas/InsuranceCard"
         count:
           type: number
-        cursor:
-          type: string
-          format: uuid
     GetSubmissionsResponse:
       required:
         - items
@@ -616,9 +571,6 @@ components:
             $ref: "#/components/schemas/Submission"
         count:
           type: number
-        cursor:
-          type: string
-          format: uuid
     GetElectronicEligibilityChecksResponse:
       required:
         - items
@@ -630,29 +582,10 @@ components:
             $ref: "#/components/schemas/ElectronicEligibilityCheck"
         count:
           type: number
-        cursor:
-          type: string
-          format: uuid
-    # GetManualEligibilityChecksResponse:
-    #   required:
-    #     - items
-    #     - count
-    #   properties:
-    #     items:
-    #       type: array
-    #       items:
-    #         $ref: "#/components/schemas/ManualEligibilityCheck"
-    #     count:
-    #       type: number
-    #     cursor:
-    #       type: string
-    #       format: uuid
     GetInsuranceCardsIdResponse:
       $ref: "#/components/schemas/InsuranceCard"
     GetSubmissionsIdResponse:
       $ref: "#/components/schemas/Submission"
-    # GetManualEligibilityChecksIdResponse:
-    #   $ref: "#/components/schemas/ManualEligibilityCheck"
     GetElectronicEligibilityChecksIdResponse:
       $ref: "#/components/schemas/ElectronicEligibilityCheck"
     ExtractionStatus:
@@ -661,10 +594,7 @@ components:
     InsuranceCard:
       required:
         - id
-        - submission_id
         - created_at
-        - front_photo_download_url
-        - back_photo_download_url
       properties:
         id:
           type: string
@@ -687,8 +617,6 @@ components:
           type: string
         insurance_carrier_name:
           type: string
-        pharmacy_benefit_manager_name:
-          type: string
         plan_name:
           type: string
         rx_bin:
@@ -702,7 +630,7 @@ components:
           items:
             type: string
         plan_status:
-          $ref: "#/components/schemas/InsurancePlanStatus"
+          $ref: "#/components/schemas/InsurancePlanStatusValue"
         plan_status_fetched_at:
           type: string
           format: date-time
@@ -718,12 +646,13 @@ components:
         - id
         - created_at
         - insurance_card_id
+        - clearinghouse_entity_id
         - provider_npi
         - subscriber_first_name
         - subscriber_last_name
         - subscriber_date_of_birth
-        - subscriber_member_id
-        - service_type_codes
+        - service_type_code
+        - status
       properties:
         id:
           type: string
@@ -731,7 +660,16 @@ components:
         created_at:
           type: string
           format: date-time
+        finished_at:
+          type: string
+          format: date-time
         insurance_card_id:
+          type: string
+          format: uuid
+        clearinghouse_entity_id:
+          type: string
+          format: uuid
+        electronic_eligibility_discovery_id:
           type: string
           format: uuid
         provider_npi:
@@ -746,45 +684,10 @@ components:
           example: "2022-07-21"
         subscriber_member_id:
           type: string
-        service_type_codes:
-          type: array
-          items:
-            $ref: "#/components/schemas/X12ServiceTypeCode"
-    # ManualEligibilityCheck:
-    #   required:
-    #     - id
-    #     - created_at
-    #     - insurance_card_id
-    #     - phone_number
-    #     - provider_npi
-    #     - subscriber_first_name
-    #     - subscriber_last_name
-    #     - subscriber_date_of_birth
-    #     - subscriber_member_id
-    #   properties:
-    #     id:
-    #       type: string
-    #       format: uuid
-    #     created_at:
-    #       type: string
-    #       format: date-time
-    #     insurance_card_id:
-    #       type: string
-    #       format: uuid
-    #     phone_number:
-    #       type: string
-    #     provider_npi:
-    #       type: string
-    #     subscriber_first_name:
-    #       type: string
-    #     subscriber_last_name:
-    #       type: string
-    #     subscriber_date_of_birth:
-    #       type: string
-    #       format: date
-    #       example: "2022-07-21"
-    #     subscriber_member_id:
-    #       type: string
+        service_type_code:
+          $ref: "#/components/schemas/X12ServiceTypeCode"
+        status:
+          $ref: "#/components/schemas/ElectronicEligibilityCheckStatus"
     X12ServiceTypeCode:
       type: string
       enum:
@@ -1161,10 +1064,6 @@ components:
           type: string
           nullable: true
           format: uuid
-        pharmacy_benefit_manager_id:
-          type: string
-          nullable: true
-          format: uuid
         plan_name:
           type: string
           nullable: true
@@ -1200,9 +1099,6 @@ components:
         group_number:
           type: string
         insurance_carrier_id:
-          type: string
-          format: uuid
-        pharmacy_benefit_manager_id:
           type: string
           format: uuid
         plan_name:
@@ -1264,9 +1160,12 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/X12ServiceTypeCode"
+    ElectronicEligibilityCheckStatus:
+      type: string
+      enum: ["pending", "success", "failure"]
     ElectronicEligibilityDiscoveryStatus:
       type: string
-      enum: ["in_progress", "success", "failure"]
+      enum: ["pending", "success", "failure"]
     InsurancePlanStatusValue:
       type: string
       enum: ["active", "inactive"]
@@ -1348,7 +1247,7 @@ components:
           format: uuid
     PostExtractionsResponse:
       $ref: "#/components/schemas/Extraction"
-    PharmacyBenefitManager:
+    ClearinghouseEntity:
       required:
         - id
         - created_at
@@ -1381,7 +1280,6 @@ components:
         - id
         - created_at
         - insurance_card_id
-        - patient_id
         - status
       properties:
         id:
@@ -1390,28 +1288,16 @@ components:
         created_at:
           type: string
           format: date-time
-        insurance_card_id:
+        finished_at:
           type: string
-          format: uuid
-        patient_id:
+          format: date-time
+        insurance_card_id:
           type: string
           format: uuid
         status:
           $ref: "#/components/schemas/ElectronicEligibilityDiscoveryStatus"
     GetElectronicEligibilityDiscoveriesIdResponse:
       $ref: "#/components/schemas/ElectronicEligibilityDiscovery"
-    GetPharmacyBenefitManagersResponse:
-      required:
-        - items
-        - count
-      properties:
-        items:
-          type: array
-          items:
-            $ref: "#/components/schemas/PharmacyBenefitManager"
-        count:
-          type: integer
-          format: int64
     GetInsuranceCarriersResponse:
       required:
         - items
@@ -1424,6 +1310,18 @@ components:
         count:
           type: integer
           format: int64
+    GetClearinghouseEntitiesResponse:
+      required:
+        - items
+        - count
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/ClearinghouseEntity"
+        count:
+          type: integer
+          format: int64
     GetElectronicEligibilityDiscoveriesResponse:
       required:
         - items
@@ -1432,22 +1330,40 @@ components:
         items:
           type: array
           items:
-            $ref: "#/components/schemas/InsurancePlanStatus"
+            $ref: "#/components/schemas/ElectronicEligibilityDiscovery"
         count:
           type: integer
           format: int64
     PostElectronicEligibilityDiscoveriesPayload:
       required:
         - insurance_card_id
-        - patient_id
+        - provider_npi
       properties:
         insurance_card_id:
           type: string
           format: uuid
-        patient_id:
+        provider_npi:
+          type: string
+    PostElectronicEligibilityDiscoveriesResponse:
+      $ref: "#/components/schemas/ElectronicEligibilityDiscovery"
+    PostElectronicEligibilityChecksPayload:
+      required:
+        - insurance_card_id
+        - provider_npi
+        - clearinghouse_entity_id
+        - service_type_code
+      properties:
+        insurance_card_id:
           type: string
           format: uuid
-    PostElectronicEligibilityDiscoveriesResponse:
+        provider_npi:
+          type: string
+        clearinghouse_entity_id:
+          type: string
+          format: uuid
+        service_type_code:
+          $ref: "#/components/schemas/X12ServiceTypeCode"
+    PostElectronicEligibilityChecksResponse:
       $ref: "#/components/schemas/ElectronicEligibilityDiscovery"
   securitySchemes:
     bearerAuth:
