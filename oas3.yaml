@@ -595,10 +595,15 @@ components:
       required:
         - id
         - created_at
+        - source
       properties:
+        reference_id:
+          type: string
         id:
           type: string
           format: uuid
+        source:
+          $ref: "#/components/schemas/Source"
         submission_id:
           type: string
           format: uuid
@@ -964,7 +969,7 @@ components:
           type: string
     Source:
       type: string
-      enum: ["collection_page", "dashboard"]
+      enum: ["collection_page", "dashboard", "api"]
     AssignedSex:
       type: string
       enum:
@@ -1045,6 +1050,9 @@ components:
           type: string
     PatchInsuranceCardsIdPayload:
       properties:
+        reference_id:
+          type: string
+          nullable: true
         front_photo_object_key:
           type: string
           nullable: true
@@ -1085,6 +1093,8 @@ components:
       required:
         - patient_id
       properties:
+        reference_id:
+          type: string
         patient_id:
           type: string
           format: uuid
