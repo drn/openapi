@@ -590,7 +590,7 @@ components:
       $ref: "#/components/schemas/ElectronicEligibilityCheck"
     ExtractionStatus:
       type: string
-      enum: ["in_progress", "success", "failure"]
+      enum: ["pending", "complete"]
     InsuranceCard:
       required:
         - id
