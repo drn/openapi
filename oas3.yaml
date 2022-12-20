@@ -596,6 +596,7 @@ components:
         - id
         - created_at
         - source
+        - insurance_carrier_ids
       properties:
         reference_id:
           type: string
@@ -620,8 +621,11 @@ components:
           type: string
         group_number:
           type: string
-        insurance_carrier_name:
-          type: string
+        insurance_carrier_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
         plan_name:
           type: string
         rx_bin:
@@ -1068,9 +1072,8 @@ components:
         group_number:
           type: string
           nullable: true
-        insurance_carrier_id:
+        insurance_carrier_ids:
           type: string
-          nullable: true
           format: uuid
         plan_name:
           type: string
@@ -1108,7 +1111,7 @@ components:
           type: string
         group_number:
           type: string
-        insurance_carrier_id:
+        insurance_carrier_ids:
           type: string
           format: uuid
         plan_name:
