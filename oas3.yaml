@@ -1114,8 +1114,10 @@ components:
         group_number:
           type: string
         insurance_carrier_ids:
-          type: string
-          format: uuid
+          type: array
+          items:
+            type: string
+            format: uuid
         plan_name:
           type: string
         rx_bin:
