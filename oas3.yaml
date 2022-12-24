@@ -974,6 +974,9 @@ components:
           type: string
         reference_id:
           type: string
+    ElectronicEligibilityDiscoverySource:
+      type: string
+      enum: ["system", "dashboard", "api"]
     ElectronicEligibilityCheckSource:
       type: string
       enum: ["system", "dashboard", "api"]
@@ -1307,6 +1310,7 @@ components:
         - created_at
         - insurance_card_id
         - status
+        - source
       properties:
         id:
           type: string
@@ -1320,6 +1324,8 @@ components:
         insurance_card_id:
           type: string
           format: uuid
+        source:
+          $ref: "#/components/schemas/ElectronicEligibilityCheckSource"
         status:
           $ref: "#/components/schemas/ElectronicEligibilityDiscoveryStatus"
     GetElectronicEligibilityDiscoveriesIdResponse:
@@ -1363,7 +1369,10 @@ components:
     PostElectronicEligibilityDiscoveriesPayload:
       required:
         - insurance_card_id
+        - source
       properties:
+        source:
+          $ref: "#/components/schemas/ElectronicEligibilityCheckSource"
         insurance_card_id:
           type: string
           format: uuid
