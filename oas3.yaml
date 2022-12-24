@@ -604,7 +604,7 @@ components:
           type: string
           format: uuid
         source:
-          $ref: "#/components/schemas/Source"
+          $ref: "#/components/schemas/InsuranceCardSource"
         submission_id:
           type: string
           format: uuid
@@ -662,6 +662,7 @@ components:
         - subscriber_date_of_birth
         - service_type_code
         - status
+        - source
       properties:
         id:
           type: string
@@ -697,6 +698,8 @@ components:
           $ref: "#/components/schemas/X12ServiceTypeCode"
         status:
           $ref: "#/components/schemas/ElectronicEligibilityCheckStatus"
+        source:
+          $ref: "#/components/schemas/ElectronicEligibilityCheckSource"
     X12ServiceTypeCode:
       type: string
       enum:
@@ -947,7 +950,7 @@ components:
           type: string
           format: uuid
         source:
-          $ref: "#/components/schemas/Source"
+          $ref: "#/components/schemas/PatientSource"
         created_at:
           type: string
           format: date-time
@@ -971,7 +974,13 @@ components:
           type: string
         reference_id:
           type: string
-    Source:
+    ElectronicEligibilityCheckSource:
+      type: string
+      enum: ["system", "dashboard", "api"]
+    InsuranceCardSource:
+      type: string
+      enum: ["collection_page", "dashboard", "api"]
+    PatientSource:
       type: string
       enum: ["collection_page", "dashboard", "api"]
     AssignedSex:
