@@ -604,7 +604,7 @@ components:
           type: string
           format: uuid
         source:
-          $ref: "#/components/schemas/Source"
+          $ref: "#/components/schemas/InsuranceCardSource"
         submission_id:
           type: string
           format: uuid
@@ -662,6 +662,7 @@ components:
         - subscriber_date_of_birth
         - service_type_code
         - status
+        - source
       properties:
         id:
           type: string
@@ -697,6 +698,8 @@ components:
           $ref: "#/components/schemas/X12ServiceTypeCode"
         status:
           $ref: "#/components/schemas/ElectronicEligibilityCheckStatus"
+        source:
+          $ref: "#/components/schemas/ElectronicEligibilityCheckSource"
     X12ServiceTypeCode:
       type: string
       enum:
@@ -947,7 +950,7 @@ components:
           type: string
           format: uuid
         source:
-          $ref: "#/components/schemas/Source"
+          $ref: "#/components/schemas/PatientSource"
         created_at:
           type: string
           format: date-time
@@ -971,7 +974,16 @@ components:
           type: string
         reference_id:
           type: string
-    Source:
+    ElectronicEligibilityDiscoverySource:
+      type: string
+      enum: ["system", "dashboard", "api"]
+    ElectronicEligibilityCheckSource:
+      type: string
+      enum: ["system", "dashboard", "api"]
+    InsuranceCardSource:
+      type: string
+      enum: ["collection_page", "dashboard", "api"]
+    PatientSource:
       type: string
       enum: ["collection_page", "dashboard", "api"]
     AssignedSex:
@@ -1298,6 +1310,7 @@ components:
         - created_at
         - insurance_card_id
         - status
+        - source
       properties:
         id:
           type: string
@@ -1311,6 +1324,8 @@ components:
         insurance_card_id:
           type: string
           format: uuid
+        source:
+          $ref: "#/components/schemas/ElectronicEligibilityCheckSource"
         status:
           $ref: "#/components/schemas/ElectronicEligibilityDiscoveryStatus"
     GetElectronicEligibilityDiscoveriesIdResponse:
@@ -1354,13 +1369,13 @@ components:
     PostElectronicEligibilityDiscoveriesPayload:
       required:
         - insurance_card_id
-        - provider_npi
+        - source
       properties:
+        source:
+          $ref: "#/components/schemas/ElectronicEligibilityCheckSource"
         insurance_card_id:
           type: string
           format: uuid
-        provider_npi:
-          type: string
     PostElectronicEligibilityDiscoveriesResponse:
       $ref: "#/components/schemas/ElectronicEligibilityDiscovery"
     PostElectronicEligibilityChecksPayload:
@@ -1381,7 +1396,7 @@ components:
         service_type_code:
           $ref: "#/components/schemas/X12ServiceTypeCode"
     PostElectronicEligibilityChecksResponse:
-      $ref: "#/components/schemas/ElectronicEligibilityDiscovery"
+      $ref: "#/components/schemas/ElectronicEligibilityCheck"
   securitySchemes:
     bearerAuth:
       type: http
